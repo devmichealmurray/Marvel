@@ -1,8 +1,7 @@
 package com.devmmurray.marvel.data.model.dto
 
-import com.devmmurray.marvel.data.model.UrlAddress.Companion.AUTH
-import com.devmmurray.marvel.data.model.UrlAddress.Companion.LARGE_SQUARE
-import com.devmmurray.marvel.data.model.UrlAddress.Companion.UNCANNY
+import com.devmmurray.marvel.data.model.UrlAddress.Companion.POSTER
+import com.devmmurray.marvel.data.model.UrlAddress.Companion.THUMBNAIL
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -31,14 +30,14 @@ data class Thumbnail(
     @Json(name = "path") val path: String?,
     @Json(name = "extension") val extension: String?
 ) {
-    val square: String? by lazy { buildSquareUrl() }
-    private fun buildSquareUrl(): String? {
-        return "$path${LARGE_SQUARE}$extension"
+    val thumbnail: String? by lazy { buildThumbnailUrl() }
+    private fun buildThumbnailUrl(): String? {
+        return "$path${THUMBNAIL}.$extension"
     }
 
     val poster: String? by lazy { buildPosterUrl() }
     private fun buildPosterUrl(): String? {
-        return "$path${UNCANNY}$extension"
+        return "$path${POSTER}.$extension"
     }
 }
 
@@ -49,13 +48,12 @@ data class ComicsList(
 
 @JsonClass(generateAdapter = true)
 data class ComicItems(
-    @Json(name = "resourceURI") val resourceURI: String?,
-    @Json(name = "name") val name: String?
+    @Json(name = "resourceURI") val resourceURI: String?
 ) {
-    val comicUrl: String? by lazy { buildComicUrl() }
-    private fun buildComicUrl(): String? {
-        val subUri = resourceURI?.substring(36)
-        return "$subUri${AUTH}"
+    val comicId: String? by lazy { buildComicId() }
+    private fun buildComicId(): String? {
+        val subUri = resourceURI?.substring(43)
+        return "$subUri".trim()
     }
 }
 
@@ -66,12 +64,11 @@ data class SeriesList(
 
 @JsonClass(generateAdapter = true)
 data class SeriesItems(
-    @Json(name = "resourceURI") val resourceURI: String?,
-    @Json(name = "name") val name: String?
+    @Json(name = "resourceURI") val resourceURI: String?
 ) {
-    val seriesUrl: String? by lazy { buildSeriesUrl() }
-    private fun buildSeriesUrl(): String? {
-        val subUri = resourceURI?.substring(36)
-        return "$subUri${AUTH}"
+    val seriesId: String? by lazy { buildSeriesId() }
+    private fun buildSeriesId(): String? {
+        val subUri = resourceURI?.substring(43)
+        return "$subUri".trim()
     }
 }

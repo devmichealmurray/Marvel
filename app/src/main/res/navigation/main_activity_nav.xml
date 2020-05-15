@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.devmmurray.marvel.ui.view.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_charactersFragment"
+            app:destination="@id/charactersFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_seriesFragment"
+            app:destination="@id/seriesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_comicsFragment"
+            app:destination="@id/comicsFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/charactersFragment"
+        android:name="com.devmmurray.marvel.ui.view.CharactersFragment"
+        android:label="fragment_characters"
+        tools:layout="@layout/fragment_characters" >
+        <action
+            android:id="@+id/action_charactersFragment_to_comicsFragment"
+            app:destination="@id/comicsFragment" />
+        <action
+            android:id="@+id/action_charactersFragment_to_seriesFragment"
+            app:destination="@id/seriesFragment" />
+        <action
+            android:id="@+id/action_charactersFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/comicsFragment"
+        android:name="com.devmmurray.marvel.ui.view.ComicsFragment"
+        android:label="fragment_comics"
+        tools:layout="@layout/fragment_comics" >
+        <action
+            android:id="@+id/action_comicsFragment_to_charactersFragment2"
+            app:destination="@id/charactersFragment" />
+        <action
+            android:id="@+id/action_comicsFragment_to_seriesFragment2"
+            app:destination="@id/seriesFragment" />
+        <action
+            android:id="@+id/action_comicsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/seriesFragment"
+        android:name="com.devmmurray.marvel.ui.view.SeriesFragment"
+        android:label="fragment_series"
+        tools:layout="@layout/fragment_series" >
+        <action
+            android:id="@+id/action_seriesFragment_to_comicsFragment"
+            app:destination="@id/comicsFragment" />
+        <action
+            android:id="@+id/action_seriesFragment_to_charactersFragment"
+            app:destination="@id/charactersFragment" />
+        <action
+            android:id="@+id/action_seriesFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+</navigation>

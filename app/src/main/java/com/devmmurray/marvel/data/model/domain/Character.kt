@@ -7,8 +7,8 @@ class CharacterObject(
     val description: String?,
     val thumbnailLink: String?,
     val posterImage: String?,
-    val comics: List<ComicStub>?,
-    val series: List<SeriesStub>?
+    val comics: List<ComicStub?>?,
+    val series: List<SeriesStub?>?
 )
 
 class ComicLink(

@@ -1,7 +1,6 @@
 package com.devmmurray.marvel.data.model.dto
 
 import com.devmmurray.marvel.data.model.UrlAddress
-import com.devmmurray.marvel.data.model.UrlAddress.Companion.AUTH
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -19,7 +18,7 @@ data class ComicData(
 data class ComicResults(
     @Json(name = "id") val id: Int?,
     @Json(name = "title") val title: String?,
-    @Json(name = "issueNumber") val issueNumber: String?,
+    @Json(name = "issueNumber") val issueNumber: Int?,
     @Json(name = "description") val description: String?,
     @Json(name = "isbn") val isbn: String?,
     @Json(name = "upc") val upc: String?,
@@ -33,13 +32,12 @@ data class ComicResults(
 
 @JsonClass(generateAdapter = true)
 data class ComicSeries(
-    @Json(name = "resourceURI") val resourceURI: String?,
-    @Json(name = "name") val name: String?
+    @Json(name = "resourceURI") val resourceURI: String?
 ) {
-    val series: String? by lazy { buildSeriesUrl() }
-    private fun buildSeriesUrl(): String? {
-        val subUri = resourceURI?.substring(36)
-        return "$subUri${AUTH}"
+    val seriesId: String? by lazy { buildSeriesId() }
+    private fun buildSeriesId(): String? {
+        val subUri = resourceURI?.substring(43)
+        return "$subUri".trim()
     }
 }
 
@@ -54,9 +52,9 @@ data class ComicThumbnail(
     @Json(name = "path") val path: String?,
     @Json(name = "extension") val extension: String?
 ) {
-    val square: String? by lazy { buildSquareUrl() }
-    private fun buildSquareUrl(): String? {
-        return "$path${UrlAddress.LARGE_SQUARE}$extension"
+    val thumbnail: String? by lazy { buildThumbnailUrl() }
+    private fun buildThumbnailUrl(): String? {
+        return "$path${UrlAddress.THUMBNAIL}.$extension"
     }
 }
 
@@ -67,7 +65,7 @@ data class ComicImages(
 ) {
     val poster: String? by lazy { buildPosterUrl() }
     private fun buildPosterUrl(): String? {
-        return "$path${UrlAddress.UNCANNY}$extension"
+        return "$path${UrlAddress.POSTER}.$extension"
     }
 }
 
@@ -78,12 +76,11 @@ data class Characters(
 
 @JsonClass(generateAdapter = true)
 data class CharacterItems(
-    @Json(name = "resourceURI") val resourceURI: String?,
-    @Json(name = "name") val name: String?
+    @Json(name = "resourceURI") val resourceURI: String?
 ) {
-    val character: String? by lazy { buildCharacterUrl() }
-    private fun buildCharacterUrl(): String? {
-        val subUri = resourceURI?.substring(36)
-        return "$subUri${AUTH}"
+    val characterId: String? by lazy { buildCharacterId() }
+    private fun buildCharacterId(): String? {
+        val subUri = resourceURI?.substring(47)
+        return "$subUri".trim()
     }
 }
