@@ -11,6 +11,16 @@ import retrofit2.Response
 
 object MarvelApiRepo {
 
+    suspend fun get100MarvelCharacters(offset: Int): Response<CharacterDto> {
+        return MarvelApiService.apiClient.get100MarvelCharacter(
+            offset = offset,
+            limit = 100,
+            ts = "1",
+            apiKey = "2b4c8ae29183275bab5c86e66e208907",
+            hash = "7371ae1e35ece11b7ad8af3f806a12b7"
+        )
+    }
+
     suspend fun getMarvelCharacter(characterId: String): Response<CharacterDto> {
         return MarvelApiService.apiClient.getMarvelCharacter(
             id = characterId,

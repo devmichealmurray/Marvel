@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         appStart.add(R.id.nav_host_fragment, HomeFragment())
         appStart.commit()
 
+
         marvelLogo.setOnClickListener {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.nav_host_fragment, HomeFragment())
@@ -41,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 
     private val exceptionObserver = Observer<Boolean> {
         if (it) {

@@ -10,6 +10,15 @@ import retrofit2.http.Query
 
 interface MarvelApi {
 
+    @GET("v1/public/characters")
+    suspend fun get100MarvelCharacter(
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int,
+        @Query("ts") ts: String,
+        @Query("apikey") apiKey: String,
+        @Query("hash") hash: String
+    ): Response<CharacterDto>
+
     @GET("v1/public/characters/{id}")
     suspend fun getMarvelCharacter(
         @Path("id") id: String,

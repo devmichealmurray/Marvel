@@ -38,6 +38,8 @@ class HomeFragment : Fragment() {
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         homeViewModel.character.observe(viewLifecycleOwner, characterObserver)
+
+        homeViewModel.getAllCharacters()
         homeViewModel.characterList.observe(viewLifecycleOwner, characterListObserver)
         homeViewModel.refresh("1009351", RetrofitFlags.SINGLE_CHARACTER)
         homeViewModel.loadCharacterArray(popularCharacterArray, RetrofitFlags.CHARACTER_LIST)
@@ -63,6 +65,7 @@ class HomeFragment : Fragment() {
     private val characterListObserver = Observer<ArrayList<CharacterObject>> { list ->
         list?.let {
             Log.d(TAG, "**** Character List Observer Called ******")
+            Log.d(TAG, "******* Character List Observer: Size = ${it.size} **********")
             firstAdapter.updatePhotoList(it)
         }
     }

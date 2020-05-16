@@ -9,6 +9,7 @@ import com.devmmurray.marvel.data.model.RetrofitFlags
 import com.devmmurray.marvel.data.model.domain.CharacterObject
 import com.devmmurray.marvel.data.model.domain.ComicStub
 import com.devmmurray.marvel.data.model.domain.SeriesStub
+import com.devmmurray.marvel.data.model.dto.CharacterResults
 import com.devmmurray.marvel.data.repository.MarvelApiRepo
 import kotlinx.coroutines.launch
 
@@ -16,6 +17,8 @@ const val TAG = "Base_View_Model"
 
 open class HomeViewModel() : ViewModel() {
 
+    private val _allCharacters by lazy { MutableLiveData<MutableList<CharacterResults>>() }
+    val allCharacters: LiveData<MutableList<CharacterResults>> get() = _allCharacters
 
     private val _characterList by lazy { MutableLiveData<ArrayList<CharacterObject>>() }
     val characterList: LiveData<ArrayList<CharacterObject>> get() = _characterList
@@ -25,6 +28,25 @@ open class HomeViewModel() : ViewModel() {
 
     private val _exceptionWatcher by lazy { MutableLiveData<Boolean>() }
     val exceptionWatcher: LiveData<Boolean> get() = _exceptionWatcher
+
+
+    fun getAllCharacters() {
+        val tempList = mutableListOf<CharacterResults>()
+        viewModelScope.launch {
+            val limit = 1500
+            var offset = 0
+            while (offset<limit) {
+                val result = MarvelApiRepo.get100MarvelCharacters(offset)
+                result.body()?.data?.results?.forEach {
+                    tempList.add(it)
+                    Log.d("Character: ", it.name?:"")
+                }
+                offset+=100
+            }
+            _allCharacters.value = tempList
+            Log.d("CharacterListSize: ",allCharacters.value?.size?.toString()?:" Empty")
+        }
+    }
 
 
     fun refresh(id: String, flag: RetrofitFlags) {
@@ -42,6 +64,7 @@ open class HomeViewModel() : ViewModel() {
     // Function to call Marvel and return one character
     private fun loadCharacterData(id: String, flag: RetrofitFlags) {
         Log.d(TAG, "***** Load Character Called *****")
+        val loadCharacterList = ArrayList<CharacterObject>()
         viewModelScope.launch {
             try {
                 val result = MarvelApiRepo.getMarvelCharacter(id)
@@ -81,7 +104,7 @@ open class HomeViewModel() : ViewModel() {
                             _character.value = character
                         } else {
                             Log.d(TAG, "* * * * * Adding To Character List * * * * * * ")
-                            _characterList.value?.add(character)
+                            loadCharacterList.add(character)
                         }
                         _exceptionWatcher.value = false
                     }
@@ -94,6 +117,7 @@ open class HomeViewModel() : ViewModel() {
                 Log.e(TAG, "******** ${e.message} ******")
                 _exceptionWatcher.value = true
             }
+            _characterList.value = loadCharacterList
         }
     }
 
