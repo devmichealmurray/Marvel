@@ -10,4 +10,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="navButton" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="elevation">0dp</item>
+        <item name="backgroundTint">@color/colorTransparent</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
 </resources>

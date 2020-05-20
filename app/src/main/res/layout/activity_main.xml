@@ -5,6 +5,7 @@
     tools:context=".ui.view.MainActivity">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.devmmurray.marvel.ui.viewmodel.MainActivityViewModel" />
@@ -56,33 +57,22 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/charactersButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/colorTransparent"
-                android:text="Characters"
+                style="@style/navButton"
                 android:onClick="@{v -> viewModel.navigateToCharactersFragment()}"
-                android:textColor="@color/colorAccent" />
+                android:text="@string/characters_button" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/comicsButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/colorTransparent"
-                android:text="Comics"
+                style="@style/navButton"
                 android:onClick="@{v -> viewModel.navigateToComicsFragment()}"
-                android:textColor="@color/colorAccent" />
+                android:text="@string/comics_button" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/seriesButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/colorTransparent"
-                android:text="Series"
+                style="@style/navButton"
+                android:layout_marginEnd="8dp"
                 android:onClick="@{v -> viewModel.navigateToSeriesFragment()}"
-                android:textColor="@color/colorAccent" />
+                android:text="@string/series_button" />
 
         </androidx.appcompat.widget.Toolbar>
 

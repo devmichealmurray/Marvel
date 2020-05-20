@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment
 import com.devmmurray.marvel.R
 import com.devmmurray.marvel.ui.viewmodel.SeriesViewModel
 
@@ -27,32 +25,32 @@ class SeriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Set Up Navigation Buttons
-        setupNavigateToCharacters()
-        setupNavigateToComics()
-        setupNavigateToSeries()
+//        setupNavigateToCharacters()
+//        setupNavigateToComics()
+//        setupNavigateToSeries()
 
     }
 
     /**
      *  Navigation Observers
      */
-
-    private fun setupNavigateToCharacters() {
-        seriesViewModel.navigateToCharacters.observe(this, Observer {
-            NavHostFragment.findNavController(this).navigate(R.id.charactersFragment)
-        })
-    }
-
-    private fun setupNavigateToComics() {
-        seriesViewModel.navigateToComics.observe(this, Observer {
-            NavHostFragment.findNavController(this).navigate(R.id.comicsFragment)
-        })
-    }
-
-    private fun setupNavigateToSeries() {
-        seriesViewModel.navigateToSeries.observe(this, Observer {
-            NavHostFragment.findNavController(this).navigate(R.id.seriesFragment)
-        })
-    }
+//
+//    private fun setupNavigateToCharacters() {
+//        seriesViewModel.navigateToCharacters.observe(this, Observer {
+//            NavHostFragment.findNavController(this).navigate(R.id.charactersFragment)
+//        })
+//    }
+//
+//    private fun setupNavigateToComics() {
+//        seriesViewModel.navigateToComics.observe(this, Observer {
+//            NavHostFragment.findNavController(this).navigate(R.id.comicsFragment)
+//        })
+//    }
+//
+//    private fun setupNavigateToSeries() {
+//        seriesViewModel.navigateToSeries.observe(this, Observer {
+//            NavHostFragment.findNavController(this).navigate(R.id.seriesFragment)
+//        })
+//    }
 
 }

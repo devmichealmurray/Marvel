@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmmurray.marvel.R
 import com.devmmurray.marvel.data.Lists
@@ -47,9 +46,9 @@ class CharactersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Set Up Navigation Buttons
-        setupNavigateToCharacters()
-        setupNavigateToComics()
-        setupNavigateToSeries()
+//        setupNavigateToCharacters()
+//        setupNavigateToComics()
+//        setupNavigateToSeries()
 
         // Get and Load Main Character ImageView and TextViews
         charactersViewModel.getPosterCharacter(CharacterRecyclerFlags.FIRST_POSTER)
@@ -104,23 +103,23 @@ class CharactersFragment : Fragment() {
      *  Navigation Observers
      */
 
-    private fun setupNavigateToCharacters() {
-        charactersViewModel.navigateToCharacters.observe(this, Observer {
-            NavHostFragment.findNavController(this).navigate(R.id.charactersFragment)
-        })
-    }
-
-    private fun setupNavigateToComics() {
-        charactersViewModel.navigateToComics.observe(this, Observer {
-            NavHostFragment.findNavController(this).navigate(R.id.comicsFragment)
-        })
-    }
-
-    private fun setupNavigateToSeries() {
-        charactersViewModel.navigateToSeries.observe(this, Observer {
-            NavHostFragment.findNavController(this).navigate(R.id.seriesFragment)
-        })
-    }
+//    private fun setupNavigateToCharacters() {
+//        charactersViewModel.navigateToCharacters.observe(this, Observer {
+//            NavHostFragment.findNavController(this).navigate(R.id.charactersFragment)
+//        })
+//    }
+//
+//    private fun setupNavigateToComics() {
+//        charactersViewModel.navigateToComics.observe(this, Observer {
+//            NavHostFragment.findNavController(this).navigate(R.id.comicsFragment)
+//        })
+//    }
+//
+//    private fun setupNavigateToSeries() {
+//        charactersViewModel.navigateToSeries.observe(this, Observer {
+//            NavHostFragment.findNavController(this).navigate(R.id.seriesFragment)
+//        })
+//    }
 
 
     // Function to load Main Character Image and Text

@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment
 import com.devmmurray.marvel.R
 import com.devmmurray.marvel.ui.viewmodel.MainActivityViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         /**
          * Home Fragment will become the loading screen
          */
+
+        setupNavigateToCharacters()
+        setupNavigateToComics()
+        setupNavigateToSeries()
 
 
 //        marvelLogo.setOnClickListener {
@@ -60,6 +66,37 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun setupNavigateToCharacters() {
+        Log.d("setup nav to comics", "****** set up nav to characters called *******")
+        mainActivityViewModel.navigateToCharacters.observe(this, Observer {
+            nav_host_fragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
+                NavHostFragment.findNavController(
+                    fragment
+                ).navigate(R.id.charactersFragment)
+            }
+        })
+    }
 
+    fun setupNavigateToComics() {
+        Log.d("setup nav to comics", "****** set up nav to comics called *******")
+        mainActivityViewModel.navigateToComics.observe(this, Observer {
+            nav_host_fragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
+                NavHostFragment.findNavController(
+                    fragment
+                ).navigate(R.id.comicsFragment)
+            }
+        })
+    }
+
+    fun setupNavigateToSeries() {
+        Log.d("setup nav to comics", "****** set up nav to characters called *******")
+        mainActivityViewModel.navigateToSeries.observe(this, Observer {
+            nav_host_fragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
+                NavHostFragment.findNavController(
+                    fragment
+                ).navigate(R.id.seriesFragment)
+            }
+        })
+    }
 
 }

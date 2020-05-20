@@ -6,4 +6,7 @@
     <string name="toolbar_comics">Comics</string>
     <string name="toolbar_series">Series</string>
     <string name="marvel_logo">MARVEL</string>
+    <string name="characters_button">Characters</string>
+    <string name="comics_button">Comics</string>
+    <string name="series_button">Series</string>
 </resources>
