@@ -5,13 +5,10 @@
     tools:context=".ui.view.MainActivity">
 
     <data>
-
         <variable
-            name="viewModel"
-            type="com.devmmurray.marvel.ui.viewmodel.MainActivityViewModel" />
-
+            name="mainActivity"
+            type="com.devmmurray.marvel.ui.view.MainActivity" />
     </data>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,7 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/main_activity_nav" />
+             />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -47,31 +44,30 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/marvel_font"
-                android:gravity="center|center_vertical"
+                android:gravity="center"
                 android:padding="4dp"
                 android:text="@string/marvel_logo"
                 android:textColor="@color/colorMarvelRed"
-                android:textSize="44sp"
+                android:textSize="40sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/charactersButton"
                 style="@style/navButton"
-                android:onClick="@{v -> viewModel.navigateToCharactersFragment()}"
+                android:onClick="goToCharactersFragment"
                 android:text="@string/characters_button" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/comicsButton"
                 style="@style/navButton"
-                android:onClick="@{v -> viewModel.navigateToComicsFragment()}"
+                android:onClick="goToComicsFragment"
                 android:text="@string/comics_button" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/seriesButton"
                 style="@style/navButton"
-                android:layout_marginEnd="8dp"
-                android:onClick="@{v -> viewModel.navigateToSeriesFragment()}"
+                android:onClick="goToSeriesFragment"
                 android:text="@string/series_button" />
 
         </androidx.appcompat.widget.Toolbar>

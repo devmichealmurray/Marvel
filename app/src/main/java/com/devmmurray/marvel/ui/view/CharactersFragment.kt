@@ -45,10 +45,6 @@ class CharactersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set Up Navigation Buttons
-//        setupNavigateToCharacters()
-//        setupNavigateToComics()
-//        setupNavigateToSeries()
 
         // Get and Load Main Character ImageView and TextViews
         charactersViewModel.getPosterCharacter(CharacterRecyclerFlags.FIRST_POSTER)
@@ -98,28 +94,6 @@ class CharactersFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
     }
-
-    /**
-     *  Navigation Observers
-     */
-
-//    private fun setupNavigateToCharacters() {
-//        charactersViewModel.navigateToCharacters.observe(this, Observer {
-//            NavHostFragment.findNavController(this).navigate(R.id.charactersFragment)
-//        })
-//    }
-//
-//    private fun setupNavigateToComics() {
-//        charactersViewModel.navigateToComics.observe(this, Observer {
-//            NavHostFragment.findNavController(this).navigate(R.id.comicsFragment)
-//        })
-//    }
-//
-//    private fun setupNavigateToSeries() {
-//        charactersViewModel.navigateToSeries.observe(this, Observer {
-//            NavHostFragment.findNavController(this).navigate(R.id.seriesFragment)
-//        })
-//    }
 
 
     // Function to load Main Character Image and Text

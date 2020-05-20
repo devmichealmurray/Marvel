@@ -13,7 +13,6 @@ import com.devmmurray.marvel.data.model.entities.CharacterEntity
 import com.devmmurray.marvel.data.model.entities.CharacterSeriesEntity
 import com.devmmurray.marvel.data.repository.CharacterDbRepo
 import com.devmmurray.marvel.data.repository.MarvelApiRepo
-import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -112,25 +111,5 @@ open class MainActivityViewModel(application: Application) : AndroidViewModel(ap
         }
     }
 
-    /**
-     *  Navigation
-     */
 
-    val navigateToCharacters = LiveEvent<Boolean>()
-
-    fun navigateToCharactersFragment() {
-        navigateToCharacters.value = true
-    }
-
-    val navigateToComics = LiveEvent<Boolean>()
-
-    fun navigateToComicsFragment() {
-        navigateToComics.value = true
-    }
-
-    val navigateToSeries = LiveEvent<Boolean>()
-
-    fun navigateToSeriesFragment() {
-        navigateToSeries.value = true
-    }
 }

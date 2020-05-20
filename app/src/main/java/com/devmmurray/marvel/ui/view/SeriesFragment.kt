@@ -24,33 +24,5 @@ class SeriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set Up Navigation Buttons
-//        setupNavigateToCharacters()
-//        setupNavigateToComics()
-//        setupNavigateToSeries()
-
     }
-
-    /**
-     *  Navigation Observers
-     */
-//
-//    private fun setupNavigateToCharacters() {
-//        seriesViewModel.navigateToCharacters.observe(this, Observer {
-//            NavHostFragment.findNavController(this).navigate(R.id.charactersFragment)
-//        })
-//    }
-//
-//    private fun setupNavigateToComics() {
-//        seriesViewModel.navigateToComics.observe(this, Observer {
-//            NavHostFragment.findNavController(this).navigate(R.id.comicsFragment)
-//        })
-//    }
-//
-//    private fun setupNavigateToSeries() {
-//        seriesViewModel.navigateToSeries.observe(this, Observer {
-//            NavHostFragment.findNavController(this).navigate(R.id.seriesFragment)
-//        })
-//    }
-
 }
