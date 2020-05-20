@@ -13,11 +13,15 @@ import com.devmmurray.marvel.data.model.entities.CharacterEntity
 import com.devmmurray.marvel.data.model.entities.CharacterSeriesEntity
 import com.devmmurray.marvel.data.repository.CharacterDbRepo
 import com.devmmurray.marvel.data.repository.MarvelApiRepo
+import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 open class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
+    /**
+     * Set Up Of Character Database
+     */
     val repository: CharacterDbRepo
 
     init {
@@ -25,15 +29,27 @@ open class MainActivityViewModel(application: Application) : AndroidViewModel(ap
         repository = CharacterDbRepo(characterDAO)
     }
 
-    private val _dataBaseIsLoaded by lazy { MutableLiveData<Boolean>() }
-    val dataBaseIsLoaded: LiveData<Boolean> get() = _dataBaseIsLoaded
+    // Functions to Check if database has been loaded
 
     private val _checkDatabaseLD  by lazy { MutableLiveData<CharacterObject>() }
     val checkDatabaseLD: LiveData<CharacterObject> get() = _checkDatabaseLD
 
-    private val _allCharacters by lazy { MutableLiveData<MutableList<CharacterObject>>() }
-    val allCharacters: LiveData<MutableList<CharacterObject>> get() = _allCharacters
+    fun checkDatabase() = viewModelScope.launch(Dispatchers.IO) {
+        _checkDatabaseLD.postValue(repository.checkDatabase())
+    }
 
+    // Live Data sends response to confirm the characters DB has finished loading
+    private val _dataBaseIsLoaded by lazy { MutableLiveData<Boolean>() }
+    val dataBaseIsLoaded: LiveData<Boolean> get() = _dataBaseIsLoaded
+
+//
+//    private val _allCharacters by lazy { MutableLiveData<MutableList<CharacterObject>>() }
+//    val allCharacters: LiveData<MutableList<CharacterObject>> get() = _allCharacters
+//
+
+    /**
+     *  Functions to Load Database with Marvel Json
+     */
 
     private fun addCharacter(character: CharacterEntity) = viewModelScope.launch(Dispatchers.IO) {
         Log.d("MainViewModel", "******* Adding Character ${character.name} *********")
@@ -48,10 +64,6 @@ open class MainActivityViewModel(application: Application) : AndroidViewModel(ap
     private fun addCharacterSeries(series: CharacterSeriesEntity) = viewModelScope.launch(Dispatchers.IO) {
         Log.d("MainViewModel", "******* Adding Series ${series.seriesId} *********")
         repository.addCharacterSeries(series)
-    }
-
-    fun checkDatabase() = viewModelScope.launch(Dispatchers.IO) {
-       _checkDatabaseLD.postValue(repository.checkDatabase())
     }
 
 
@@ -98,5 +110,27 @@ open class MainActivityViewModel(application: Application) : AndroidViewModel(ap
                 offset += 100
             }
         }
+    }
+
+    /**
+     *  Navigation
+     */
+
+    val navigateToCharacters = LiveEvent<Boolean>()
+
+    fun navigateToCharactersFragment() {
+        navigateToCharacters.value = true
+    }
+
+    val navigateToComics = LiveEvent<Boolean>()
+
+    fun navigateToComicsFragment() {
+        navigateToComics.value = true
+    }
+
+    val navigateToSeries = LiveEvent<Boolean>()
+
+    fun navigateToSeriesFragment() {
+        navigateToSeries.value = true
     }
 }

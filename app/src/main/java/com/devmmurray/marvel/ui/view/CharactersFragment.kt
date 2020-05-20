@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devmmurray.marvel.R
 import com.devmmurray.marvel.data.Lists
@@ -34,6 +37,7 @@ class CharactersFragment : Fragment() {
         charactersViewModel.loadList(Lists.spidermanMap, CharacterRecyclerFlags.SPIDERMAN)
         charactersViewModel.loadList(Lists.xmenMap, CharacterRecyclerFlags.XMEN)
         charactersViewModel.loadList(Lists.classicsMap, CharacterRecyclerFlags.CLASSICS)
+        charactersViewModel.loadList(Lists.tvShowCharacters, CharacterRecyclerFlags.TV)
         charactersViewModel.loadList(Lists.punisherMap, CharacterRecyclerFlags.PUNISHER)
 
         return inflater.inflate(R.layout.fragment_characters, container, false)
@@ -42,13 +46,28 @@ class CharactersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        charactersViewModel.getMainCharacter()
-        charactersViewModel.getCharacterLD.observe(viewLifecycleOwner, Observer {
-            it?.let { loadNewCharacter(it) }
+        // Set Up Navigation Buttons
+        setupNavigateToCharacters()
+        setupNavigateToComics()
+        setupNavigateToSeries()
+
+        // Get and Load Main Character ImageView and TextViews
+        charactersViewModel.getPosterCharacter(CharacterRecyclerFlags.FIRST_POSTER)
+        charactersViewModel.firstPosterLD.observe(viewLifecycleOwner, Observer {
+            it?.let { loadNewCharacter(it, firstPosterImage, firstPosterName, firstPosterDescription) }
         })
 
+        charactersViewModel.getPosterCharacter(CharacterRecyclerFlags.SECOND_POSTER)
+        charactersViewModel.secondPosterLD.observe(viewLifecycleOwner, Observer {
+            it?.let { loadNewCharacter(it, secondPosterImage, secondPosterName, secondPosterDescription) }
+        })
 
-        // Recycler List Observers
+        charactersViewModel.getPosterCharacter(CharacterRecyclerFlags.THIRD_POSTER)
+        charactersViewModel.thirdPosterLD.observe(viewLifecycleOwner, Observer {
+            it?.let { loadNewCharacter(it, thirdPosterImage, thirdPosterName, thirdPosterDescription) }
+        })
+
+        // Recycler Lists Observers
         charactersViewModel.popularListLD.observe(viewLifecycleOwner, popularListObserver)
         charactersViewModel.femaleListLD.observe(viewLifecycleOwner, femaleListObserver)
         charactersViewModel.villainListLD.observe(viewLifecycleOwner, villainListObserver)
@@ -56,6 +75,7 @@ class CharactersFragment : Fragment() {
         charactersViewModel.spidermanListLD.observe(viewLifecycleOwner, spidermanListObserver)
         charactersViewModel.xmenListLD.observe(viewLifecycleOwner, xmenListObserver)
         charactersViewModel.classicsListLD.observe(viewLifecycleOwner, classicsListObserver)
+        charactersViewModel.tvListLD.observe(viewLifecycleOwner, tvListObserver)
         charactersViewModel.punisherListLD.observe(viewLifecycleOwner, punisherListObserver)
 
         // Recycler LayoutManagers
@@ -73,23 +93,53 @@ class CharactersFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         classicsRecycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        tvRecycler.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         punisherRecycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
     }
 
+    /**
+     *  Navigation Observers
+     */
+
+    private fun setupNavigateToCharacters() {
+        charactersViewModel.navigateToCharacters.observe(this, Observer {
+            NavHostFragment.findNavController(this).navigate(R.id.charactersFragment)
+        })
+    }
+
+    private fun setupNavigateToComics() {
+        charactersViewModel.navigateToComics.observe(this, Observer {
+            NavHostFragment.findNavController(this).navigate(R.id.comicsFragment)
+        })
+    }
+
+    private fun setupNavigateToSeries() {
+        charactersViewModel.navigateToSeries.observe(this, Observer {
+            NavHostFragment.findNavController(this).navigate(R.id.seriesFragment)
+        })
+    }
+
+
     // Function to load Main Character Image and Text
-    private fun loadNewCharacter(character: CharacterObject) {
+    private fun loadNewCharacter(
+        character: CharacterObject,
+        imageHolder: ImageView,
+        nameHolder: TextView,
+        descriptionHolder: TextView) {
+
         Picasso.get()
             .load(character.poster)
             .error(R.drawable.marvel_placeholder)
             .placeholder(R.drawable.hulk)
             .resize(1200, 0)
             .centerInside()
-            .into(charactersMainImage)
+            .into(imageHolder)
 
-        mainCharacterName.text = character.name?.toUpperCase()
-        mainCharacterDescription.text = character.description
+        nameHolder.text = character.name?.toUpperCase()
+        descriptionHolder.text = character.description
     }
 
 
@@ -145,6 +195,13 @@ class CharactersFragment : Fragment() {
             classicsRecycler.adapter = MarvelRecyclerAdapter(it, CharacterRecyclerFlags.CLASSICS)
         }
         classicsRecycler.visibility = View.VISIBLE
+    }
+
+    private val tvListObserver = Observer<ArrayList<CharacterObject>> {
+        it?.let {
+            tvRecycler.adapter = MarvelRecyclerAdapter(it, CharacterRecyclerFlags.TV)
+        }
+        tvRecycler.visibility = View.VISIBLE
     }
 
     private val punisherListObserver = Observer<ArrayList<CharacterObject>> {

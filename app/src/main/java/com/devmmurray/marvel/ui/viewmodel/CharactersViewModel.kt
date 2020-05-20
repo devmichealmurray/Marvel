@@ -11,6 +11,7 @@ import com.devmmurray.marvel.data.Lists.Companion.popularCharacterArray
 import com.devmmurray.marvel.data.Lists.Companion.punisherMap
 import com.devmmurray.marvel.data.Lists.Companion.spidermanMap
 import com.devmmurray.marvel.data.Lists.Companion.topVillainsArray
+import com.devmmurray.marvel.data.Lists.Companion.tvShowCharacters
 import com.devmmurray.marvel.data.Lists.Companion.xmenMap
 import com.devmmurray.marvel.data.model.domain.CharacterObject
 import com.devmmurray.marvel.util.CharacterRecyclerFlags
@@ -19,7 +20,8 @@ import kotlinx.coroutines.launch
 
 class CharactersViewModel(application: Application) : MainActivityViewModel(application) {
 
-    fun getMainCharacter() {
+    // Functions to Retrieve Poster Characters
+    fun getPosterCharacter(flags: CharacterRecyclerFlags) {
         // List of all character lists
         val listOfMaps = arrayListOf<Map<String, Int>>(
             popularCharacterArray,
@@ -29,6 +31,7 @@ class CharactersViewModel(application: Application) : MainActivityViewModel(appl
             spidermanMap,
             xmenMap,
             classicsMap,
+            tvShowCharacters,
             punisherMap
         )
         // Randomly choose a list
@@ -44,13 +47,24 @@ class CharactersViewModel(application: Application) : MainActivityViewModel(appl
         val mapPosition = (0 until map.size - 1).random()
         val character = idArray[mapPosition]
 
-        getCharacter(character)
+        getPosterCharacter(character, flags)
     }
 
-    private fun getCharacter(id: Int) = viewModelScope.launch(Dispatchers.IO) {
-        _getCharacterLD.postValue(repository.getCharacterByMarvelId(id))
-    }
+    private fun getPosterCharacter(id: Int, flags: CharacterRecyclerFlags) =
+        viewModelScope.launch(Dispatchers.IO) {
+            when (flags) {
+                CharacterRecyclerFlags.FIRST_POSTER ->
+                    _firstPosterLD.postValue(repository.getCharacterByMarvelId(id))
+                CharacterRecyclerFlags.SECOND_POSTER ->
+                    _secondPosterLD.postValue(repository.getCharacterByMarvelId(id))
+                else ->
+                    _thirdPosterLD.postValue(repository.getCharacterByMarvelId(id))
+            }
 
+        }
+
+
+    // Functions to retrieve character lists for recyclers
     fun loadList(list: Map<String, Int>, flag: CharacterRecyclerFlags) {
         getList(list, flag)
     }
@@ -71,6 +85,7 @@ class CharactersViewModel(application: Application) : MainActivityViewModel(appl
             CharacterRecyclerFlags.SPIDERMAN -> _spidermanListLD.value = tempList
             CharacterRecyclerFlags.XMEN -> _xmenListLD.value = tempList
             CharacterRecyclerFlags.CLASSICS -> _classicsListLD.value = tempList
+            CharacterRecyclerFlags.TV -> _tvListLD.value = tempList
             CharacterRecyclerFlags.PUNISHER -> _punisherListLD.value = tempList
         }
     }
@@ -80,9 +95,19 @@ class CharactersViewModel(application: Application) : MainActivityViewModel(appl
      *  Live Data Variables
      */
 
-    private val _getCharacterLD by lazy { MutableLiveData<CharacterObject>() }
-    val getCharacterLD: LiveData<CharacterObject> get() = _getCharacterLD
 
+    // Large Poster Live Data
+    private val _firstPosterLD by lazy { MutableLiveData<CharacterObject>() }
+    val firstPosterLD: LiveData<CharacterObject> get() = _firstPosterLD
+
+    private val _secondPosterLD by lazy { MutableLiveData<CharacterObject>() }
+    val secondPosterLD: LiveData<CharacterObject> get() = _secondPosterLD
+
+    private val _thirdPosterLD by lazy { MutableLiveData<CharacterObject>() }
+    val thirdPosterLD: LiveData<CharacterObject> get() = _thirdPosterLD
+
+
+    // List Recycler Live Data
     private val _popularListLD by lazy { MutableLiveData<ArrayList<CharacterObject>>() }
     val popularListLD: LiveData<ArrayList<CharacterObject>> get() = _popularListLD
 
@@ -103,6 +128,9 @@ class CharactersViewModel(application: Application) : MainActivityViewModel(appl
 
     private val _classicsListLD by lazy { MutableLiveData<ArrayList<CharacterObject>>() }
     val classicsListLD: LiveData<ArrayList<CharacterObject>> get() = _classicsListLD
+
+    private val _tvListLD by lazy { MutableLiveData<ArrayList<CharacterObject>>() }
+    val tvListLD: LiveData<ArrayList<CharacterObject>> get() = _tvListLD
 
     private val _punisherListLD by lazy { MutableLiveData<ArrayList<CharacterObject>>() }
     val punisherListLD: LiveData<ArrayList<CharacterObject>> get() = _punisherListLD

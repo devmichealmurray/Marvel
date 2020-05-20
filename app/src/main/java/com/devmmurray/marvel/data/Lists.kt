@@ -29,14 +29,17 @@ class Lists {
 
         val femaleCharacterArray = mapOf<String, Int>(
             "Jean Grey" to 1009327,
-            "Carol Danvers" to 1009261,
+            "Captain Marvel" to 1011095,
+            "Scarlet Witch" to 1010972,
+            "Wasp" to 1009707,
+            "X-23" to 1009722,
             "She-Hulk" to 1017111,
             "Black Widow" to 1009189,
             "Rogue" to 1009546,
             "Gamora" to 1010763,
+            "Hellcat" to 1010351,
             "Storm" to 1009629,
             "Emma Frost" to 1009310,
-            "Wasp" to 1009707,
             "Mystique" to 1009465,
             "Elektra" to 1009288,
             "Jane Foster" to 1010329,
@@ -44,9 +47,6 @@ class Lists {
             "Jessica Jones" to 1009378,
             "Pepper Potts" to 1009494,
             "Okoye" to 1017840,
-            "X-23" to 1009722,
-            "Captain Marvel" to 1011095,
-            "Scarlet Witch" to 1010972,
             "Squirrel Girl" to 1010860
         )
 
@@ -182,6 +182,32 @@ class Lists {
             "Falcon" to 1009297
         )
 
+        val tvShowCharacters = mapOf<String, Int>(
+            "Jessica Jones" to 1009378,
+            "Luke Cage" to 1009215,
+            "Iron Fist" to 1016839,
+            "Phil Coulson" to 1017839,
+            "Purple Man" to 1009520,
+            "Misty Knight" to 1010682,
+            "Hellcat" to 1010351,
+            "Nuke" to 1010707,
+            "Typhoid Mary" to 1010369,
+            "Daredevil" to 1009262,
+            "Nightshade" to 1011124,
+            "Foggy Nelson" to 1009470,
+            "Kingpin" to 1009389,
+            "Colleen Wing" to 1010676,
+            "Bullseye" to 1009212,
+            "Ben Urich" to 1010782,
+            "Punisher" to 1009515,
+            "Elektra" to 1009288,
+            "Mockingbird" to 1011220,
+            "Cottonmouth" to 1011362,
+            "Steel Serpent" to 1010889,
+            "Edwin Jarvis" to 1011072,
+            "Madame Masque" to 1010352
+        )
+
         val punisherMap = mapOf<String, Int>(
             "Punisher" to 1009515,
             "Jigsaw" to 1009374,
@@ -201,6 +227,7 @@ class Lists {
             "Maginty" to 1011135,
             "Mr. Payback" to 1009461
         )
+
     }
 
 }

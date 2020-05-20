@@ -30,6 +30,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    dataBinding {
+        enabled = true
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -40,8 +45,9 @@ def retrofitVersion = '2.6.0'
 def lifeCycleExtensionVersion = '1.1.1'
 def nav_version = "2.3.0-alpha06"
 def room_version = "2.2.5"
-def lifecycle_version = "2.2.0"
+def lifecycle_version = "2.3.0-alpha02"
 def arch_version = "2.1.0"
+def live_events = "1.0.1"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -67,7 +73,7 @@ dependencies {
 
     // LifeCycle
     implementation "android.arch.lifecycle:extensions:$lifeCycleExtensionVersion"
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha02'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
@@ -77,6 +83,7 @@ dependencies {
 
 
     // Navigation
+    implementation "androidx.navigation:navigation-runtime-ktx:$nav_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
@@ -90,5 +97,16 @@ dependencies {
     implementation "androidx.room:room-rxjava2:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    //Live Events
+    implementation "com.github.hadilq.liveevent:liveevent:$live_events"
+
+    //Kapt
+    kapt 'androidx.databinding:databinding-compiler:3.6.3'
+
+    //Groupie
+    implementation 'com.xwray:groupie:2.5.1'
+    implementation 'com.xwray:groupie-kotlin-android-extensions:2.5.1'
+    implementation "com.xwray:groupie-databinding:2.5.1"
 
 }
