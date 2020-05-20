@@ -7,9 +7,9 @@ class Series(
     val description: String?,
     val startYear: Int?,
     val endYear: Int?,
-    val thumbnail: String,
-    val characters: List<CharacterStub>?,
-    val comics: List<ComicStub>
+    val thumbnail: String
+//    val characters: List<CharacterStub>?,
+//    val comics: List<ComicStub>
 )
 
 // Character Stub for use with Recycler Views

@@ -12,17 +12,13 @@ class Comic(
     val onSaleDate: String?,
     val thumbnail: String?,
     val posterImages: List<PosterImage>?,
-    val characterLinks: List<CharacterLinks>,
-    val characters: List<Character>
+    val characterLinks: List<String>,
+    val characters: List<CharacterObject>
 )
 
-class CharacterLinks(
-    val characterUrl: String?
-)
 
 class ComicStub(
     val id: Int?,
     val title: String?,
     val thumbnail: String?
-
 )

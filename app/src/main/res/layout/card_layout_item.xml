@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="125dp"
-    android:layout_height="125dp"
+    android:layout_width="120dp"
+    android:layout_height="170dp"
     android:layout_margin="4dp">
 
     <androidx.cardview.widget.CardView
@@ -12,7 +12,6 @@
         android:elevation="4dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        app:cardCornerRadius="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
-                android:id="@+id/circleRecyclerImage"
+                android:id="@+id/cardRecyclerImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/standard_medium"
@@ -35,7 +34,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
     <TextView
-        android:id="@+id/circleRecyclerText"
+        android:id="@+id/cardRecyclerText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="6dp"
@@ -43,11 +42,11 @@
         android:layout_marginBottom="0dp"
         android:padding="4dp"
         android:maxLength="15"
-        android:background="@drawable/main_image_gradient"
+        android:background="@color/colorNameBackground"
         android:text="Character Name Placeholder"
         android:textSize="32sp"
         android:fontFamily="@font/marvel_font"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

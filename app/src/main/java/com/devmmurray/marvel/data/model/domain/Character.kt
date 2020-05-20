@@ -2,26 +2,26 @@ package com.devmmurray.marvel.data.model.domain
 
 // Full Character Object
 class CharacterObject(
-    val id: Int?,
+    var uid: Long = 0L,
+    val marvelId: Int?,
     val name: String?,
     val description: String?,
-    val thumbnailLink: String?,
-    val posterImage: String?,
-    val comics: List<ComicStub?>?,
-    val series: List<SeriesStub?>?
+    val thumbnail: String?,
+    val poster: String?
 )
 
-class ComicLink(
-    val comicUrl: String?
+class CharacterComicsList(
+    // id generate by room
+    val uid: Long = 0L,
+    // id of character it belongs to
+    val characterId: Int?,
+    // the Marvel id
+    val comicId: String?
 )
 
-class SeriesLink(
-    val seriesUrl: String?
+class CharacterSeriesList(
+    val id: Long = 0L,
+    val characterId: Int?,
+    val seriesId: String?
 )
 
-// Character Stub for use with Recycler Views
-class CharacterStub(
-    val id: Int?,
-    val name: String?,
-    val thumbnailLink: String?
-)
