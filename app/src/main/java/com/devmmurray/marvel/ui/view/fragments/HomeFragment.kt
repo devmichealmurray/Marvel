@@ -1,4 +1,4 @@
-package com.devmmurray.marvel.ui.view
+package com.devmmurray.marvel.ui.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

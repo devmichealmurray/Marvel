@@ -1,4 +1,4 @@
-package com.devmmurray.marvel.ui.view
+package com.devmmurray.marvel.ui.view.activities
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.devmmurray.marvel.R
+import com.devmmurray.marvel.ui.view.fragments.CharactersFragment
+import com.devmmurray.marvel.ui.view.fragments.ComicsFragment
+import com.devmmurray.marvel.ui.view.fragments.SeriesFragment
 import com.devmmurray.marvel.ui.viewmodel.MainActivityViewModel
 
 
@@ -21,7 +24,9 @@ open class MainActivity : AppCompatActivity() {
         mainActivityViewModel.checkDatabase()
 
         val appStart = supportFragmentManager.beginTransaction()
-        appStart.add(R.id.nav_host_fragment, CharactersFragment())
+        appStart.add(R.id.nav_host_fragment,
+            CharactersFragment()
+        )
         appStart.commit()
 
         // Checking DB to confirm Marvel data has been loaded
@@ -37,19 +42,25 @@ open class MainActivity : AppCompatActivity() {
 
     fun goToCharactersFragment(view: View) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.nav_host_fragment, CharactersFragment())
+        transaction.replace(R.id.nav_host_fragment,
+            CharactersFragment()
+        )
         transaction.commit()
     }
 
     fun goToComicsFragment(view: View) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.nav_host_fragment, ComicsFragment())
+        transaction.replace(R.id.nav_host_fragment,
+            ComicsFragment()
+        )
         transaction.commit()
     }
 
     fun goToSeriesFragment(view: View) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.nav_host_fragment, SeriesFragment())
+        transaction.replace(R.id.nav_host_fragment,
+            SeriesFragment()
+        )
         transaction.commit()
     }
 

@@ -9,4 +9,7 @@
     <string name="characters_button">Characters</string>
     <string name="comics_button">Comics</string>
     <string name="series_button">Series</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

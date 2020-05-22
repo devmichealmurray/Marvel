@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.devmmurray.marvel.R
 import com.devmmurray.marvel.data.model.domain.CharacterObject
+import com.devmmurray.marvel.ui.view.fragments.CharactersFragmentDirections
 import com.devmmurray.marvel.util.CharacterRecyclerFlags
 import com.squareup.picasso.Picasso
 
@@ -42,6 +44,12 @@ class MarvelViewHolder(v: View) : RecyclerView.ViewHolder(v) {
             .into(cardImage)
 
         cardText.text = character.name?.toUpperCase()
+    }
+
+    fun moveToDetailActivity(view: View) {
+        val directions = CharactersFragmentDirections
+            .actionCharactersFragmentToCharacterDetail()
+        Navigation.findNavController(view).navigate(directions)
     }
 }
 
