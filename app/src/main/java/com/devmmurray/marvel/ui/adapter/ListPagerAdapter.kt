@@ -3,7 +3,7 @@ package com.devmmurray.marvel.ui.adapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.devmmurray.marvel.ui.view.fragments.DetailListFragment
+import com.devmmurray.marvel.ui.view.viewpager.DetailListFragment
 
 class ListPagerAdapter(activity: AppCompatActivity, private val itemsCount: Int) :
     FragmentStateAdapter(activity) {

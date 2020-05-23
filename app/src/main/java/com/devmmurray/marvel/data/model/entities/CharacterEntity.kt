@@ -3,9 +3,9 @@ package com.devmmurray.marvel.data.model.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.devmmurray.marvel.data.model.domain.CharacterComicsList
 import com.devmmurray.marvel.data.model.domain.CharacterObject
-import com.devmmurray.marvel.data.model.domain.CharacterSeriesList
+import com.devmmurray.marvel.data.model.domain.CharactersComic
+import com.devmmurray.marvel.data.model.domain.CharactersSeries
 
 // Character Object to be stored in Database for use in UI.
 // This prevents exceeding daily limit on API calls to Marvel
@@ -28,7 +28,7 @@ class CharacterEntity(
     companion object {
 
         fun fromCharacterObject(character: CharacterObject) =
-            CharacterObject(
+            CharacterEntity(
                 character.uid,
                 character.marvelId,
                 character.name,
@@ -53,23 +53,23 @@ class CharacterEntity(
 class CharacterComicsEntity(
     @PrimaryKey(autoGenerate = true)
     val uid: Long = 0L,
-    @ColumnInfo
+    @ColumnInfo(name = "character_id")
     val characterId: Int?,
-    @ColumnInfo
+    @ColumnInfo(name = "comic_id")
     val comicId: String?
 ) {
     companion object {
 
-        fun fromCharacterComicsObject(comic: CharacterComicsList) =
-            CharacterComicsList(
+        fun fromCharacterComics(comic: CharactersComic) =
+            CharacterComicsEntity(
                 comic.uid,
                 comic.characterId,
                 comic.comicId
             )
     }
 
-    fun toCharacterComicsObject() =
-        CharacterComicsList(
+    fun toCharactersComic() =
+        CharactersComic(
             uid,
             characterId,
             comicId
@@ -80,23 +80,23 @@ class CharacterComicsEntity(
 class CharacterSeriesEntity(
     @PrimaryKey(autoGenerate = true)
     val uid: Long = 0L,
-    @ColumnInfo
+    @ColumnInfo(name = "character_id")
     val characterId: Int?,
-    @ColumnInfo
+    @ColumnInfo(name = "series_id")
     val seriesId: String?
 ) {
     companion object {
 
-        fun fromCharacterSeriesObject(series: CharacterSeriesList) =
-            CharacterSeriesList(
+        fun fromCharacterSeries(series: CharactersSeries) =
+            CharacterSeriesEntity(
                 series.id,
                 series.characterId,
                 series.seriesId
             )
     }
 
-    fun toCharacterSeriesObject() =
-        CharacterSeriesList(
+    fun toCharacterSeries() =
+        CharactersSeries(
             uid,
             characterId,
             seriesId

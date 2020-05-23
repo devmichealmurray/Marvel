@@ -14,14 +14,14 @@ import com.devmmurray.marvel.data.Lists.Companion.topVillainsArray
 import com.devmmurray.marvel.data.Lists.Companion.tvShowCharacters
 import com.devmmurray.marvel.data.Lists.Companion.xmenMap
 import com.devmmurray.marvel.data.model.domain.CharacterObject
-import com.devmmurray.marvel.util.CharacterRecyclerFlags
+import com.devmmurray.marvel.util.CharacterFlags
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CharactersViewModel(application: Application) : MainActivityViewModel(application) {
 
     // Functions to Retrieve Poster Characters
-    fun getPosterCharacter(flags: CharacterRecyclerFlags) {
+    fun getPosterCharacter(flags: CharacterFlags) {
         // List of all character lists
         val listOfMaps = arrayListOf<Map<String, Int>>(
             popularCharacterArray,
@@ -50,12 +50,12 @@ class CharactersViewModel(application: Application) : MainActivityViewModel(appl
         getPosterCharacter(character, flags)
     }
 
-    private fun getPosterCharacter(id: Int, flags: CharacterRecyclerFlags) =
+    private fun getPosterCharacter(id: Int, flags: CharacterFlags) =
         viewModelScope.launch(Dispatchers.IO) {
             when (flags) {
-                CharacterRecyclerFlags.FIRST_POSTER ->
+                CharacterFlags.FIRST_POSTER ->
                     _firstPosterLD.postValue(repository.getCharacterByMarvelId(id))
-                CharacterRecyclerFlags.SECOND_POSTER ->
+                CharacterFlags.SECOND_POSTER ->
                     _secondPosterLD.postValue(repository.getCharacterByMarvelId(id))
                 else ->
                     _thirdPosterLD.postValue(repository.getCharacterByMarvelId(id))
@@ -65,11 +65,11 @@ class CharactersViewModel(application: Application) : MainActivityViewModel(appl
 
 
     // Functions to retrieve character lists for recyclers
-    fun loadList(list: Map<String, Int>, flag: CharacterRecyclerFlags) {
+    fun loadList(list: Map<String, Int>, flag: CharacterFlags) {
         getList(list, flag)
     }
 
-    private fun getList(list: Map<String, Int>, flag: CharacterRecyclerFlags) {
+    private fun getList(list: Map<String, Int>, flag: CharacterFlags) {
         val tempList = ArrayList<CharacterObject>()
         viewModelScope.launch {
             list.forEach { (_, id) ->
@@ -78,15 +78,15 @@ class CharactersViewModel(application: Application) : MainActivityViewModel(appl
             }
         }
         when (flag) {
-            CharacterRecyclerFlags.POPULAR -> _popularListLD.value = tempList
-            CharacterRecyclerFlags.FEMALE -> _femaleListLD.value = tempList
-            CharacterRecyclerFlags.VILLAIN -> _villainListLD.value = tempList
-            CharacterRecyclerFlags.AVENGERS -> _avengerListLD.value = tempList
-            CharacterRecyclerFlags.SPIDERMAN -> _spidermanListLD.value = tempList
-            CharacterRecyclerFlags.XMEN -> _xmenListLD.value = tempList
-            CharacterRecyclerFlags.CLASSICS -> _classicsListLD.value = tempList
-            CharacterRecyclerFlags.TV -> _tvListLD.value = tempList
-            CharacterRecyclerFlags.PUNISHER -> _punisherListLD.value = tempList
+            CharacterFlags.POPULAR -> _popularListLD.value = tempList
+            CharacterFlags.FEMALE -> _femaleListLD.value = tempList
+            CharacterFlags.VILLAIN -> _villainListLD.value = tempList
+            CharacterFlags.AVENGERS -> _avengerListLD.value = tempList
+            CharacterFlags.SPIDERMAN -> _spidermanListLD.value = tempList
+            CharacterFlags.XMEN -> _xmenListLD.value = tempList
+            CharacterFlags.CLASSICS -> _classicsListLD.value = tempList
+            CharacterFlags.TV -> _tvListLD.value = tempList
+            CharacterFlags.PUNISHER -> _punisherListLD.value = tempList
         }
     }
 

@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class ComicDto(
+data class ComicsDto(
     @Json(name = "data") val data: ComicData?
 )
 
@@ -16,18 +16,17 @@ data class ComicData(
 
 @JsonClass(generateAdapter = true)
 data class ComicResults(
-    @Json(name = "id") val id: Int?,
+    @Json(name = "id") val marvelId: Int?,
     @Json(name = "title") val title: String?,
-    @Json(name = "issueNumber") val issueNumber: Int?,
+    @Json(name = "issueNumber") val issueNumber: Double?,
     @Json(name = "description") val description: String?,
     @Json(name = "isbn") val isbn: String?,
-    @Json(name = "upc") val upc: String?,
     @Json(name = "pageCount") val pageCount: Int?,
     @Json(name = "series") val series: ComicSeries?,
     @Json(name = "dates") val dates: List<ComicDates>?,
     @Json(name = "thumbnail") val thumbnail: ComicThumbnail?,
-    @Json(name = "images") val image: List<ComicImages>?,
-    @Json(name = "characters") val characters: CharacterItems?
+//    @Json(name = "images") val image: List<ComicImages>?,
+    @Json(name = "characters") val characters: Characters?
 )
 
 @JsonClass(generateAdapter = true)
@@ -58,16 +57,19 @@ data class ComicThumbnail(
     }
 }
 
-@JsonClass(generateAdapter = true)
-data class ComicImages(
-    @Json(name = "path") val path: String?,
-    @Json(name = "extension") val extension: String?
-) {
-    val poster: String? by lazy { buildPosterUrl() }
-    private fun buildPosterUrl(): String? {
-        return "$path${UrlAddress.POSTER}.$extension"
-    }
-}
+// Most of the comics have one image and it is the same as the thumbnail
+// Leaving this functionality in place in case I decide to use it
+
+//@JsonClass(generateAdapter = true)
+//data class ComicImages(
+//    @Json(name = "path") val path: String?,
+//    @Json(name = "extension") val extension: String?
+//) {
+//    val poster: String? by lazy { buildPosterUrl() }
+//    private fun buildPosterUrl(): String? {
+//        return "$path${UrlAddress.POSTER}.$extension"
+//    }
+//}
 
 @JsonClass(generateAdapter = true)
 data class Characters(

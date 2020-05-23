@@ -10,16 +10,16 @@ class CharacterObject(
     val poster: String?
 )
 
-class CharacterComicsList(
+class CharactersComic(
     // id generate by room
     val uid: Long = 0L,
     // id of character it belongs to
     val characterId: Int?,
-    // the Marvel id
+    // the Marvel id of the comic
     val comicId: String?
 )
 
-class CharacterSeriesList(
+class CharactersSeries(
     val id: Long = 0L,
     val characterId: Int?,
     val seriesId: String?

@@ -10,7 +10,7 @@ import com.devmmurray.marvel.data.model.entities.CharacterEntity
 import com.devmmurray.marvel.data.model.entities.CharacterSeriesEntity
 
 @Dao
-interface ICharacterDAO {
+interface CharacterDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addCharacter(character: CharacterEntity)
@@ -22,17 +22,16 @@ interface ICharacterDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addCharacterComic(comic: CharacterComicsEntity)
 
-    @Query("SELECT * FROM character_comics WHERE characterId = :characterId")
+    @Query("SELECT * FROM character_comics WHERE character_id = :characterId")
     suspend fun getCharacterComics(characterId: Int): MutableList<CharacterComicsEntity>
-
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addCharacterSeries(series: CharacterSeriesEntity)
 
-    @Query("SELECT * FROM character_series WHERE characterId = :characterId ")
+    @Query("SELECT * FROM character_series WHERE character_id = :characterId ")
     suspend fun getCharacterSeries(characterId: Int): MutableList<CharacterSeriesEntity>
 
     // Check if Database is empty
     @Query("SELECT * FROM characters LIMIT 1")
-    suspend fun checkDatabase(): CharacterObject
+    suspend fun checkCharacterDatabase(): CharacterObject
 }

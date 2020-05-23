@@ -1,6 +1,6 @@
 package com.devmmurray.marvel.util
 
-enum class CharacterRecyclerFlags {
+enum class CharacterFlags {
     FIRST_POSTER,
     SECOND_POSTER,
     THIRD_POSTER,

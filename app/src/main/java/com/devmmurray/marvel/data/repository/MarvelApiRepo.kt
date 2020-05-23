@@ -5,7 +5,7 @@ import com.devmmurray.marvel.data.model.UrlAddress.Companion.API_KEY
 import com.devmmurray.marvel.data.model.UrlAddress.Companion.HASH
 import com.devmmurray.marvel.data.model.UrlAddress.Companion.TS
 import com.devmmurray.marvel.data.model.dto.CharacterDto
-import com.devmmurray.marvel.data.model.dto.ComicDto
+import com.devmmurray.marvel.data.model.dto.ComicsDto
 import com.devmmurray.marvel.data.model.dto.SeriesDto
 import retrofit2.Response
 
@@ -30,7 +30,7 @@ object MarvelApiRepo {
         )
     }
 
-    suspend fun getMarvelComic(comicId: String): Response<ComicDto> {
+    suspend fun getMarvelComic(comicId: String): Response<ComicsDto> {
         return MarvelApiService.apiClient.getMarvelComic(
             id = comicId,
             ts = TS,

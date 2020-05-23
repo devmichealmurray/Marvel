@@ -1,4 +1,4 @@
-package com.devmmurray.marvel.ui.view.fragments
+package com.devmmurray.marvel.ui.view.viewpager
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +16,8 @@ class DetailListFragment : Fragment() {
         const val ARG_POSITION = "position"
 
         fun getInstance(position: Int): Fragment {
-            val listFragment = DetailListFragment()
+            val listFragment =
+                DetailListFragment()
             val bundle = Bundle()
             bundle.putInt(ARG_POSITION, position)
             listFragment.arguments = bundle

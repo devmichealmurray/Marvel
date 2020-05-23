@@ -15,7 +15,7 @@ import com.devmmurray.marvel.data.Lists
 import com.devmmurray.marvel.data.model.domain.CharacterObject
 import com.devmmurray.marvel.ui.adapter.MarvelRecyclerAdapter
 import com.devmmurray.marvel.ui.viewmodel.CharactersViewModel
-import com.devmmurray.marvel.util.CharacterRecyclerFlags
+import com.devmmurray.marvel.util.CharacterFlags
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_characters.*
 
@@ -29,15 +29,15 @@ class CharactersFragment : Fragment() {
     ): View? {
 
         // Load Character Lists
-        charactersViewModel.loadList(Lists.popularCharacterArray, CharacterRecyclerFlags.POPULAR)
-        charactersViewModel.loadList(Lists.femaleCharacterArray, CharacterRecyclerFlags.FEMALE)
-        charactersViewModel.loadList(Lists.topVillainsArray, CharacterRecyclerFlags.VILLAIN)
-        charactersViewModel.loadList(Lists.avengersMap, CharacterRecyclerFlags.AVENGERS)
-        charactersViewModel.loadList(Lists.spidermanMap, CharacterRecyclerFlags.SPIDERMAN)
-        charactersViewModel.loadList(Lists.xmenMap, CharacterRecyclerFlags.XMEN)
-        charactersViewModel.loadList(Lists.classicsMap, CharacterRecyclerFlags.CLASSICS)
-        charactersViewModel.loadList(Lists.tvShowCharacters, CharacterRecyclerFlags.TV)
-        charactersViewModel.loadList(Lists.punisherMap, CharacterRecyclerFlags.PUNISHER)
+        charactersViewModel.loadList(Lists.popularCharacterArray, CharacterFlags.POPULAR)
+        charactersViewModel.loadList(Lists.femaleCharacterArray, CharacterFlags.FEMALE)
+        charactersViewModel.loadList(Lists.topVillainsArray, CharacterFlags.VILLAIN)
+        charactersViewModel.loadList(Lists.avengersMap, CharacterFlags.AVENGERS)
+        charactersViewModel.loadList(Lists.spidermanMap, CharacterFlags.SPIDERMAN)
+        charactersViewModel.loadList(Lists.xmenMap, CharacterFlags.XMEN)
+        charactersViewModel.loadList(Lists.classicsMap, CharacterFlags.CLASSICS)
+        charactersViewModel.loadList(Lists.tvShowCharacters, CharacterFlags.TV)
+        charactersViewModel.loadList(Lists.punisherMap, CharacterFlags.PUNISHER)
 
         return inflater.inflate(R.layout.fragment_characters, container, false)
     }
@@ -47,17 +47,17 @@ class CharactersFragment : Fragment() {
 
 
         // Get and Load Main Character ImageView and TextViews
-        charactersViewModel.getPosterCharacter(CharacterRecyclerFlags.FIRST_POSTER)
+        charactersViewModel.getPosterCharacter(CharacterFlags.FIRST_POSTER)
         charactersViewModel.firstPosterLD.observe(viewLifecycleOwner, Observer {
             it?.let { loadNewCharacter(it, firstPosterImage, firstPosterName, firstPosterDescription) }
         })
 
-        charactersViewModel.getPosterCharacter(CharacterRecyclerFlags.SECOND_POSTER)
+        charactersViewModel.getPosterCharacter(CharacterFlags.SECOND_POSTER)
         charactersViewModel.secondPosterLD.observe(viewLifecycleOwner, Observer {
             it?.let { loadNewCharacter(it, secondPosterImage, secondPosterName, secondPosterDescription) }
         })
 
-        charactersViewModel.getPosterCharacter(CharacterRecyclerFlags.THIRD_POSTER)
+        charactersViewModel.getPosterCharacter(CharacterFlags.THIRD_POSTER)
         charactersViewModel.thirdPosterLD.observe(viewLifecycleOwner, Observer {
             it?.let { loadNewCharacter(it, thirdPosterImage, thirdPosterName, thirdPosterDescription) }
         })
@@ -122,7 +122,7 @@ class CharactersFragment : Fragment() {
 
     private val popularListObserver = Observer<ArrayList<CharacterObject>> {
         it?.let {
-            firstRecycler.adapter = MarvelRecyclerAdapter(it, CharacterRecyclerFlags.POPULAR)
+            firstRecycler.adapter = MarvelRecyclerAdapter(it, CharacterFlags.POPULAR)
         }
         firstRecycler.visibility = View.VISIBLE
     }
@@ -130,56 +130,56 @@ class CharactersFragment : Fragment() {
 
     private val femaleListObserver = Observer<ArrayList<CharacterObject>> {
         it?.let {
-            femaleRecyler.adapter = MarvelRecyclerAdapter(it, CharacterRecyclerFlags.FEMALE)
+            femaleRecyler.adapter = MarvelRecyclerAdapter(it, CharacterFlags.FEMALE)
         }
         femaleRecyler.visibility = View.VISIBLE
     }
 
     private val villainListObserver = Observer<ArrayList<CharacterObject>> {
         it?.let {
-            villainRecycler.adapter = MarvelRecyclerAdapter(it, CharacterRecyclerFlags.VILLAIN)
+            villainRecycler.adapter = MarvelRecyclerAdapter(it, CharacterFlags.VILLAIN)
         }
         villainRecycler.visibility = View.VISIBLE
     }
 
     private val avengersListObserver = Observer<ArrayList<CharacterObject>> {
         it?.let {
-            avengersRecycler.adapter = MarvelRecyclerAdapter(it, CharacterRecyclerFlags.AVENGERS)
+            avengersRecycler.adapter = MarvelRecyclerAdapter(it, CharacterFlags.AVENGERS)
         }
         avengersRecycler.visibility = View.VISIBLE
     }
 
     private val spidermanListObserver = Observer<ArrayList<CharacterObject>> {
         it?.let {
-            spidermanRecycler.adapter = MarvelRecyclerAdapter(it, CharacterRecyclerFlags.SPIDERMAN)
+            spidermanRecycler.adapter = MarvelRecyclerAdapter(it, CharacterFlags.SPIDERMAN)
         }
         spidermanRecycler.visibility = View.VISIBLE
     }
 
     private val xmenListObserver = Observer<ArrayList<CharacterObject>> {
         it?.let {
-            xmenRecycler.adapter = MarvelRecyclerAdapter(it, CharacterRecyclerFlags.XMEN)
+            xmenRecycler.adapter = MarvelRecyclerAdapter(it, CharacterFlags.XMEN)
         }
         xmenRecycler.visibility = View.VISIBLE
     }
 
     private val classicsListObserver = Observer<ArrayList<CharacterObject>> {
         it?.let {
-            classicsRecycler.adapter = MarvelRecyclerAdapter(it, CharacterRecyclerFlags.CLASSICS)
+            classicsRecycler.adapter = MarvelRecyclerAdapter(it, CharacterFlags.CLASSICS)
         }
         classicsRecycler.visibility = View.VISIBLE
     }
 
     private val tvListObserver = Observer<ArrayList<CharacterObject>> {
         it?.let {
-            tvRecycler.adapter = MarvelRecyclerAdapter(it, CharacterRecyclerFlags.TV)
+            tvRecycler.adapter = MarvelRecyclerAdapter(it, CharacterFlags.TV)
         }
         tvRecycler.visibility = View.VISIBLE
     }
 
     private val punisherListObserver = Observer<ArrayList<CharacterObject>> {
         it?.let {
-            punisherRecycler.adapter = MarvelRecyclerAdapter(it, CharacterRecyclerFlags.PUNISHER)
+            punisherRecycler.adapter = MarvelRecyclerAdapter(it, CharacterFlags.PUNISHER)
         }
         punisherRecycler.visibility = View.VISIBLE
     }

@@ -1,15 +1,27 @@
 <resources>
     <string name="app_name">Marvel Comics</string>
 
-
-    <string name="toolbar_characters">Characters</string>
-    <string name="toolbar_comics">Comics</string>
-    <string name="toolbar_series">Series</string>
+<!-- Navigation Button Labels -->
     <string name="marvel_logo">MARVEL</string>
     <string name="characters_button">Characters</string>
     <string name="comics_button">Comics</string>
     <string name="series_button">Series</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+<!-- Characters Fragment Labels and Placeholders -->
+    <string name="characters_from_punisher">Characters From Punisher</string>
+    <string name="popular_tv_characters">Popular TV Characters</string>
+    <string name="classic_marvel_characters">Classic Marvel Characters</string>
+    <string name="description_text_placeholder">Caught in a gamma bomb explosion while trying to save the life of a teenager, Dr. Bruce Banner was transformed into the incredibly powerful creature called the Hulk. An all too often misunderstood hero, the angrier the Hulk gets, the stronger the Hulk gets.</string>
+    <string name="name_placeholder">HULK</string>
+    <string name="poster_content_description">Poster Image Of Marvel Character</string>
+    <string name="characters_from_x_men">Characters From X-Men</string>
+    <string name="characters_from_spider_man">Characters From Spider-Man</string>
+    <string name="the_avengers">The Avengers</string>
+    <string name="top_marvel_villains">Top Marvel Villains</string>
+    <string name="popular_female_characters">Popular Female Characters</string>
+    <string name="popular_marvel_characters">Popular Marvel Characters</string>
+
+
+<!-- ViewPager Tab Labels -->
+
 </resources>

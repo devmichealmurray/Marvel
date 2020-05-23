@@ -1,17 +1,16 @@
 package com.devmmurray.marvel.ui.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.devmmurray.marvel.data.database.CharactersDBClient
+import com.devmmurray.marvel.data.database.RoomDatabaseClient
 import com.devmmurray.marvel.data.model.domain.CharacterObject
 import com.devmmurray.marvel.data.model.entities.CharacterComicsEntity
 import com.devmmurray.marvel.data.model.entities.CharacterEntity
 import com.devmmurray.marvel.data.model.entities.CharacterSeriesEntity
-import com.devmmurray.marvel.data.repository.CharacterDbRepo
+import com.devmmurray.marvel.data.repository.DatabaseRepository
 import com.devmmurray.marvel.data.repository.MarvelApiRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,47 +20,43 @@ open class MainActivityViewModel(application: Application) : AndroidViewModel(ap
     /**
      * Set Up Of Character Database
      */
-    val repository: CharacterDbRepo
+    val repository: DatabaseRepository
 
     init {
-        val characterDAO = CharactersDBClient.getDbInstance(application).characterDao()
-        repository = CharacterDbRepo(characterDAO)
+        val characterDAO = RoomDatabaseClient.getDbInstance(application).characterDao()
+        val comicsDAO = RoomDatabaseClient.getDbInstance(application).comicsDao()
+        val seriesDAO = RoomDatabaseClient.getDbInstance(application).seriesDao()
+        repository = DatabaseRepository(characterDAO, comicsDAO, seriesDAO)
     }
 
     // Functions to Check if database has been loaded
 
-    private val _checkDatabaseLD  by lazy { MutableLiveData<CharacterObject>() }
-    val checkDatabaseLD: LiveData<CharacterObject> get() = _checkDatabaseLD
+    private val _checkCharacterDatabase  by lazy { MutableLiveData<CharacterObject>() }
+    val checkCharacterDatabaseLD: LiveData<CharacterObject> get() = _checkCharacterDatabase
 
     fun checkDatabase() = viewModelScope.launch(Dispatchers.IO) {
-        _checkDatabaseLD.postValue(repository.checkDatabase())
+        _checkCharacterDatabase.postValue(repository.checkCharacterDatabase())
     }
 
     // Live Data sends response to confirm the characters DB has finished loading
-    private val _dataBaseIsLoaded by lazy { MutableLiveData<Boolean>() }
-    val dataBaseIsLoaded: LiveData<Boolean> get() = _dataBaseIsLoaded
 
-//
-//    private val _allCharacters by lazy { MutableLiveData<MutableList<CharacterObject>>() }
-//    val allCharacters: LiveData<MutableList<CharacterObject>> get() = _allCharacters
-//
+    private val _characterDataBaseIsLoaded by lazy { MutableLiveData<Boolean>() }
+    val characterDataBaseIsLoaded: LiveData<Boolean> get() = _characterDataBaseIsLoaded
+
 
     /**
      *  Functions to Load Database with Marvel Json
      */
 
     private fun addCharacter(character: CharacterEntity) = viewModelScope.launch(Dispatchers.IO) {
-        Log.d("MainViewModel", "******* Adding Character ${character.name} *********")
         repository.addCharacter(character)
     }
 
     private fun addCharacterComic(comic: CharacterComicsEntity) = viewModelScope.launch(Dispatchers.IO) {
-        Log.d("MainViewModel", "******* Adding Comic ${comic.comicId} *********")
         repository.addCharacterComic(comic)
     }
 
     private fun addCharacterSeries(series: CharacterSeriesEntity) = viewModelScope.launch(Dispatchers.IO) {
-        Log.d("MainViewModel", "******* Adding Series ${series.seriesId} *********")
         repository.addCharacterSeries(series)
     }
 
@@ -73,7 +68,7 @@ open class MainActivityViewModel(application: Application) : AndroidViewModel(ap
             val limit = 1500
             var offset = 0
             if (offset == limit) {
-                _dataBaseIsLoaded.value = true
+                _characterDataBaseIsLoaded.value = true
             }
             while (offset < limit) {
                 val result = MarvelApiRepo.get100MarvelCharacters(offset)

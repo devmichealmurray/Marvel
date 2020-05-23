@@ -21,16 +21,13 @@ open class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        application.deleteDatabase("characters-db")
+
         mainActivityViewModel.checkDatabase()
 
-        val appStart = supportFragmentManager.beginTransaction()
-        appStart.add(R.id.nav_host_fragment,
-            CharactersFragment()
-        )
-        appStart.commit()
-
         // Checking DB to confirm Marvel data has been loaded
-        mainActivityViewModel.checkDatabaseLD.observe(this, Observer {
+        mainActivityViewModel.checkCharacterDatabaseLD.observe(this, Observer {
             if (it == null) {
                 mainActivityViewModel.getAllCharacters()
             } else {
@@ -38,6 +35,12 @@ open class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Database is already loaded", Toast.LENGTH_SHORT).show()
             }
         })
+
+        val appStart = supportFragmentManager.beginTransaction()
+        appStart.add(R.id.nav_host_fragment,
+            CharactersFragment()
+        )
+        appStart.commit()
     }
 
     fun goToCharactersFragment(view: View) {
