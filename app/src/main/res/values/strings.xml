@@ -20,8 +20,9 @@
     <string name="top_marvel_villains">Top Marvel Villains</string>
     <string name="popular_female_characters">Popular Female Characters</string>
     <string name="popular_marvel_characters">Popular Marvel Characters</string>
+    <string name="wait_while_we_load">PLEASE WAIT WHILE WE LOAD THE MARVEL UNIVERSE</string>
 
 
-<!-- ViewPager Tab Labels -->
+    <!-- ViewPager Tab Labels -->
 
 </resources>

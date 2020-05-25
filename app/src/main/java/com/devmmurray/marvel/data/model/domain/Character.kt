@@ -4,6 +4,7 @@ package com.devmmurray.marvel.data.model.domain
 class CharacterObject(
     var uid: Long = 0L,
     val marvelId: Int?,
+    val timeStamp: Long?,
     val name: String?,
     val description: String?,
     val thumbnail: String?,

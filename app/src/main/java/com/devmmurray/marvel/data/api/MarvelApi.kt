@@ -34,8 +34,9 @@ interface MarvelApi {
     // Calls to retrieve Comics
 
     @GET("v1/public/comics")
-    suspend fun get100Comics(
-        @Path("id") id: String,
+    suspend fun get100MarvelComics(
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int,
         @Query("ts") ts: String,
         @Query("apikey") apiKey: String,
         @Query("hash") hash: String
@@ -54,8 +55,9 @@ interface MarvelApi {
     // Calls to retrieve Series
 
     @GET("v1/public/series")
-    suspend fun get100Series(
-        @Path("id") id: String,
+    suspend fun get100MarvelSeries(
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int,
         @Query("ts") ts: String,
         @Query("apikey") apiKey: String,
         @Query("hash") hash: String

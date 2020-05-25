@@ -18,7 +18,7 @@ data class SeriesData(
 
 @JsonClass(generateAdapter = true)
 data class SeriesResults(
-    @Json(name = "id") val id: Int?,
+    @Json(name = "id") val marvelId: Int?,
     @Json(name = "title") val title: String?,
     @Json(name = "description") val description: String?,
     @Json(name = "startYear") val startYear: Int?,

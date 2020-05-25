@@ -48,7 +48,7 @@
                 android:padding="4dp"
                 android:text="@string/marvel_logo"
                 android:textColor="@color/colorMarvelRed"
-                android:textSize="40sp"
+                android:textSize="44sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

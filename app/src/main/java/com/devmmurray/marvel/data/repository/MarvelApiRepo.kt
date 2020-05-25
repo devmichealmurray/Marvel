@@ -30,12 +30,32 @@ object MarvelApiRepo {
         )
     }
 
+    suspend fun get100MarvelComics(offset: Int): Response<ComicsDto> {
+        return MarvelApiService.apiClient.get100MarvelComics(
+            offset = offset,
+            limit = 100,
+            ts = "1",
+            apiKey = "2b4c8ae29183275bab5c86e66e208907",
+            hash = "7371ae1e35ece11b7ad8af3f806a12b7"
+        )
+    }
+
     suspend fun getMarvelComic(comicId: String): Response<ComicsDto> {
         return MarvelApiService.apiClient.getMarvelComic(
             id = comicId,
             ts = TS,
             apiKey = API_KEY,
             hash = HASH
+        )
+    }
+
+    suspend fun get100MarvelSeries(offset: Int): Response<SeriesDto> {
+        return MarvelApiService.apiClient.get100MarvelSeries(
+            offset = offset,
+            limit = 100,
+            ts = "1",
+            apiKey = "2b4c8ae29183275bab5c86e66e208907",
+            hash = "7371ae1e35ece11b7ad8af3f806a12b7"
         )
     }
 

@@ -16,6 +16,8 @@ class CharacterEntity(
     val uid: Long = 0L,
     @ColumnInfo(name = "marvelId")
     val marvelId: Int?,
+    @ColumnInfo(name = "created_at")
+    val timeStamp: Long?,
     @ColumnInfo(name = "name")
     val name: String?,
     @ColumnInfo(name = "description")
@@ -31,6 +33,7 @@ class CharacterEntity(
             CharacterEntity(
                 character.uid,
                 character.marvelId,
+                character.timeStamp,
                 character.name,
                 character.description,
                 character.thumbnail,
@@ -42,6 +45,7 @@ class CharacterEntity(
         CharacterObject(
             uid,
             marvelId,
+            timeStamp,
             name,
             description,
             thumbnail,

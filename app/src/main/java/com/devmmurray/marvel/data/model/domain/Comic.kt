@@ -3,6 +3,7 @@ package com.devmmurray.marvel.data.model.domain
 class Comic(
     val uid: Long = 0L,
     val marvelId: Int?,
+    val timeStamp: Long?,
     val title: String?,
     val issueNumber: Double?,
     val description: String?,

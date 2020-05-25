@@ -13,6 +13,8 @@ class ComicsEntity(
     val uid: Long = 0L,
     @ColumnInfo(name = "marvelId")
     val marvelId: Int?,
+    @ColumnInfo(name = "created_at")
+    val timeStamp: Long?,
     @ColumnInfo(name = "title")
     val title: String?,
     @ColumnInfo(name = "issue_number")
@@ -33,6 +35,7 @@ class ComicsEntity(
             ComicsEntity(
                 comic.uid,
                 comic.marvelId,
+                comic.timeStamp,
                 comic.title,
                 comic.issueNumber,
                 comic.description,
@@ -44,7 +47,7 @@ class ComicsEntity(
     }
 
     fun toComicObject() =
-        Comic(uid, marvelId, title, issueNumber, description, isbn, pageCount, series, thumbnail)
+        Comic(uid, marvelId, timeStamp, title, issueNumber, description, isbn, pageCount, series, thumbnail)
 }
 
 @Entity(tableName = "comic_characters")

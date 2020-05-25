@@ -1,7 +1,6 @@
 package com.devmmurray.marvel.ui.view.activities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -10,6 +9,7 @@ import androidx.lifecycle.Observer
 import com.devmmurray.marvel.R
 import com.devmmurray.marvel.ui.view.fragments.CharactersFragment
 import com.devmmurray.marvel.ui.view.fragments.ComicsFragment
+import com.devmmurray.marvel.ui.view.fragments.HomeFragment
 import com.devmmurray.marvel.ui.view.fragments.SeriesFragment
 import com.devmmurray.marvel.ui.viewmodel.MainActivityViewModel
 
@@ -21,26 +21,42 @@ open class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//
+//        application.deleteDatabase("characters-db")
 
-        application.deleteDatabase("characters-db")
-
-        mainActivityViewModel.checkDatabase()
+        val loading = supportFragmentManager.beginTransaction()
+        loading.add(R.id.nav_host_fragment,
+            HomeFragment()
+        )
+        loading.commit()
 
         // Checking DB to confirm Marvel data has been loaded
-        mainActivityViewModel.checkCharacterDatabaseLD.observe(this, Observer {
-            if (it == null) {
-                mainActivityViewModel.getAllCharacters()
-            } else {
-                Log.d("Main Activity", "******* Database is already loaded ********")
-                Toast.makeText(this, "Database is already loaded", Toast.LENGTH_SHORT).show()
-            }
-        })
+        mainActivityViewModel.checkDatabase()
 
-        val appStart = supportFragmentManager.beginTransaction()
-        appStart.add(R.id.nav_host_fragment,
-            CharactersFragment()
-        )
-        appStart.commit()
+        // Observer to confirm db is loaded and ready to use
+        mainActivityViewModel.dataBaseIsLoaded.observe(this, dataBaseObserver)
+        // Observer updates user with loading progress Toast messages
+        mainActivityViewModel.dataLoadingToasts.observe(this, loadingToastsObserver)
+    }
+
+
+    private val dataBaseObserver = Observer<Boolean> {
+        if (it) {
+            val appStart = supportFragmentManager.beginTransaction()
+            appStart.add(R.id.nav_host_fragment,
+                CharactersFragment()
+            )
+            appStart.commit()
+        }
+    }
+
+    private val loadingToastsObserver = Observer<Int> {
+        val message = when (it) {
+            1 -> "Character Data Loaded"
+            2 -> "Comic Data Loaded"
+            else -> "Series Data Loaded"
+        }
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     fun goToCharactersFragment(view: View) {

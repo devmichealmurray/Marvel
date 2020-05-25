@@ -13,6 +13,8 @@ class SeriesEntity(
     val uid: Long = 0L,
     @ColumnInfo(name = "marvel_id")
     val marvelId:Int?,
+    @ColumnInfo(name = "created_at")
+    val timeStamp: Long?,
     @ColumnInfo(name = "title")
     val title: String?,
     @ColumnInfo(name = "description")
@@ -29,6 +31,7 @@ class SeriesEntity(
             SeriesEntity(
                 series.uid,
                 series.marvelId,
+                series.timeStamp,
                 series.title,
                 series.description,
                 series.startYear,
@@ -38,7 +41,7 @@ class SeriesEntity(
     }
 
     fun toSeriesObject() =
-        Series(uid, marvelId, title, description, startYear, endYear, thumbnail)
+        Series(uid, marvelId, timeStamp, title, description, startYear, endYear, thumbnail)
 }
 
 @Entity(tableName = "series_characters")
@@ -48,7 +51,7 @@ class SeriesCharacterEntity(
     @ColumnInfo(name = "series_id")
     val seriesId: Int?,
     @ColumnInfo(name = "character_id")
-    val characterId: Int?
+    val characterId: String?
 ) {
     companion object{
         fun fromSeriesCharacter(character: SeriesCharacter) =
@@ -66,7 +69,7 @@ class SeriesComicEntity(
     @ColumnInfo(name = "series_id")
     val seriesId: Int?,
     @ColumnInfo(name = "comic_id")
-    val comicId: Int?
+    val comicId: String?
 ) {
     companion object{
         fun fromSeriesComic(comic: SeriesComic) =

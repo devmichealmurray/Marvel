@@ -4,6 +4,7 @@ package com.devmmurray.marvel.data.model.domain
 class Series(
     val uid: Long = 0L,
     val marvelId: Int?,
+    val timeStamp: Long?,
     val title: String?,
     val description: String?,
     val startYear: Int?,
@@ -15,11 +16,11 @@ class Series(
 class SeriesCharacter(
     val uid: Long = 0L,
     val seriesId: Int?,
-    val characterId: Int?
+    val characterId: String?
 )
 
 class SeriesComic(
     val uid: Long = 0L,
     val seriesId: Int?,
-    val comicId: Int?
+    val comicId: String?
 )
