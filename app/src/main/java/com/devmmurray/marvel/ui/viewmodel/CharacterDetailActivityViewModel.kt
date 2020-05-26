@@ -50,8 +50,8 @@ class CharacterDetailActivityViewModel(application: Application) :
                 repository.getCharacterComics(id)
 
             characterComicsIds.forEach {
-                val comic = it.comicId?.let { id -> repository.getComicByMarvelId(id) }
-                if (comic?.title == null) {
+                val comicCheck = it.comicId?.let { id -> repository.checkComicId(id) }
+                if (comicCheck == null) {
                     val result = MarvelApiRepo.getMarvelComic(it.comicId.toString())
                     result.body()?.data?.results?.forEach { thisComic ->
                         thisComic.dates?.forEach { item ->
@@ -89,6 +89,7 @@ class CharacterDetailActivityViewModel(application: Application) :
                         tempList.add(newComic.toComicObject())
                     }
                 } else {
+                    val comic = repository.getComicByMarvelId(id)
                     tempList.add(comic)
                 }
             }

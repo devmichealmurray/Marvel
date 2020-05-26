@@ -50,7 +50,7 @@ def retrofitVersion = '2.6.0'
 def lifeCycleExtensionVersion = '1.1.1'
 def nav_version = "2.3.0-beta01"
 def room_version = "2.2.5"
-def lifecycle_version = "2.3.0-alpha02"
+def lifecycle_version = "2.3.0-alpha03"
 def arch_version = "2.1.0"
 def live_events = "1.0.1"
 

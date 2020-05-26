@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.devmmurray.marvel.data.database.RoomDatabaseClient
 import com.devmmurray.marvel.data.model.UrlAddress.Companion.CURRENT_TIME
+import com.devmmurray.marvel.data.model.UrlAddress.Companion.TIME_LAPSE
 import com.devmmurray.marvel.data.model.entities.CharacterComicsEntity
 import com.devmmurray.marvel.data.model.entities.CharacterEntity
 import com.devmmurray.marvel.data.model.entities.CharacterSeriesEntity
@@ -33,27 +34,39 @@ open class MainActivityViewModel(application: Application) : AndroidViewModel(ap
     }
 
     /**
-     *  Live Data Values to update Main Activity when a fragment is ready
-     */
-
-    private val _charactersUpToDate by lazy { MutableLiveData<Boolean>() }
-    val characterUpToDate: LiveData<Boolean> get() = _charactersUpToDate
-
-    private val _comicsUpToDate by lazy { MutableLiveData<Boolean>() }
-    val comicsUpToDate: LiveData<Boolean> get() = _comicsUpToDate
-
-    private val _seriesUpToDate by lazy { MutableLiveData<Boolean>() }
-    val seriesUpToDate: LiveData<Boolean> get() = _seriesUpToDate
-
-
-    /**
      *  Functions To Check and/or update local database
      */
 
-    fun loadCharacters() {
-        Log.d(TAG, "***** Load Characters Called *****")
-        getAllCharacters()
+    fun deleteData() {
+        viewModelScope.launch {
+            repository.deleteAllComics()
+            repository.deleteAllComics()
+        }
     }
+
+    fun checkForUpdate() {
+        viewModelScope.launch {
+            val checkDb = repository.checkCharacterDatabase()
+            if (checkDb?.timeStamp != null) {
+                val timeStamp = checkDb.timeStamp
+                if (CURRENT_TIME - timeStamp > TIME_LAPSE) {
+                    deleteAllCharacaters()
+                    getAllCharacters()
+                } else {
+                    _charactersUpToDate.postValue(true)
+                }
+            } else {
+                getAllCharacters()
+            }
+        }
+    }
+
+    /**
+     *  Live Data Values to update Main Activity when a fragment is ready
+     */
+    private val _charactersUpToDate by lazy { MutableLiveData<Boolean>() }
+    val characterUpToDate: LiveData<Boolean> get() = _charactersUpToDate
+
 
     /**
      *  Functions to Load Database with Marvel Json - Nothing Below these functions -
@@ -104,19 +117,10 @@ open class MainActivityViewModel(application: Application) : AndroidViewModel(ap
                 offset += 100
             }
             _charactersUpToDate.postValue(true)
-            countCharacters()
         }
 
     }
 
-    fun countCharacters() {
-        Log.d(TAG, "* * * * * * * * * *  Count Database Called * * * * * * *")
-
-        viewModelScope.launch {
-            val count = repository.countCharacterDB()
-            Log.d(TAG, "* * * * * * * * * *  Count Database MarvelIds = $count * * * * * * *")
-        }
-    }
 
     fun addCharacter(character: CharacterEntity) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -133,5 +137,16 @@ open class MainActivityViewModel(application: Application) : AndroidViewModel(ap
             repository.addCharacterSeries(series)
         }
 
+    private fun deleteAllCharacaters() =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllCharacters()
+        }
 
+
+    fun countCharacters() {
+        viewModelScope.launch {
+            val count = repository.countCharacterDB()
+            Log.d(TAG, "* * * * * * * * * *  Count Database MarvelIds = $count * * * * * * *")
+        }
+    }
 }

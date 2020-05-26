@@ -43,12 +43,18 @@ class DatabaseRepository(
     suspend fun countCharacterDB() =
         characterDataSource.countCharacterDB()
 
+    suspend fun deleteAllCharacters() =
+        characterDataSource.deleteFromCharacters()
+
     /**
      *  Comics Database Functions
      */
 
     suspend fun addComic(comic: ComicsEntity) =
         comicsDataSource.addComic(comic)
+
+    suspend fun checkComicId(id: Int) =
+        comicsDataSource.getComicByMarvelId(id)
 
     suspend fun getComicByMarvelId(id: Int) =
         comicsDataSource.getComicByMarvelId(id).toComicObject()
@@ -70,6 +76,9 @@ class DatabaseRepository(
 
     suspend fun countComicsDatabase() =
         comicsDataSource.countComicsDatabase()
+
+    suspend fun deleteAllComics() =
+        comicsDataSource.deleteComicsDatabase()
 
 
     /**
@@ -100,4 +109,7 @@ class DatabaseRepository(
 
     suspend fun countSeriesDatabase() =
         seriesDataSource.countSeriesDatabase()
+
+    suspend fun deleteAllSeries() =
+        seriesDataSource.deleteSeriesDatabase()
 }

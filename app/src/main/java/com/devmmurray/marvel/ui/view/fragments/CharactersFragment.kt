@@ -47,12 +47,10 @@ class CharactersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         // Get and Load Main Character ImageView and TextViews
         charactersViewModel.getPosterCharacter(CharacterFlags.FIRST_POSTER)
         charactersViewModel.firstPosterLD.observe(viewLifecycleOwner, Observer {
             it?.let {
-
                 loadNewCharacter(it, firstPosterImage, firstPosterName, firstPosterDescription)
             }
         })

@@ -35,4 +35,7 @@ interface SeriesDAO {
 
     @Query("SELECT COUNT(uid) FROM series")
     suspend fun countSeriesDatabase(): Int?
+
+    @Query("DELETE FROM series")
+    suspend fun deleteSeriesDatabase()
 }

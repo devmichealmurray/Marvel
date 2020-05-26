@@ -35,4 +35,7 @@ interface ComicsDAO {
 
     @Query("SELECT COUNT(uid) FROM comics")
     suspend fun countComicsDatabase(): Int?
+
+    @Query("DELETE FROM comics")
+    suspend fun deleteComicsDatabase()
 }

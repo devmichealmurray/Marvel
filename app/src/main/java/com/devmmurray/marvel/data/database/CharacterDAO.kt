@@ -37,4 +37,5 @@ interface CharacterDAO {
     suspend fun countCharacterDB(): Int?
 
     @Query("DELETE FROM characters")
+    suspend fun deleteFromCharacters()
 }

@@ -39,7 +39,7 @@ class CharacterDetail : AppCompatActivity() {
 
         // Call the getCharacter function from the viewModel to return details
         if (marvelId != null) {
-            characterDetailViewModel.getCharacter(1009351)
+            characterDetailViewModel.getCharacter(marvelId)
         }
 
         characterDetailViewModel.returnedCharacter.observe(this, characterDetailObserver)

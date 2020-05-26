@@ -49,20 +49,20 @@ class DetailListFragment : Fragment() {
         detailListRecycler.layoutManager = GridLayoutManager(context, 3)
 
         when (requireArguments().getInt(ARG_POSITION)) {
-            0 -> detailListRecycler.adapter = DetailListRecyclerAdapter(arrayListOf(detailFragmentViewModel.returnedComics.value!!), "comic")
-            else -> detailListRecycler.adapter = DetailListRecyclerAdapter(arrayListOf(detailFragmentViewModel.returnedSeries.value!!), "series")
+            0 -> characterComicsObserver
+            else -> characterSeriesObserver
         }
     }
 
     private val characterComicsObserver = Observer<ArrayList<Comic>> {
         it?.let {
-
+            detailListRecycler.adapter = DetailListRecyclerAdapter(it as ArrayList<Any>, "comic")
         }
     }
 
     private val characterSeriesObserver = Observer<ArrayList<Series>> {
         it?.let {
-
+            detailListRecycler.adapter = DetailListRecyclerAdapter(it as ArrayList<Any>, "series")
         }
     }
 
