@@ -1,6 +1,7 @@
 package com.devmmurray.marvel.ui.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -13,16 +14,24 @@ import com.devmmurray.marvel.data.Lists.Companion.spidermanMap
 import com.devmmurray.marvel.data.Lists.Companion.topVillainsArray
 import com.devmmurray.marvel.data.Lists.Companion.tvShowCharacters
 import com.devmmurray.marvel.data.Lists.Companion.xmenMap
+import com.devmmurray.marvel.data.model.UrlAddress
 import com.devmmurray.marvel.data.model.domain.CharacterObject
+import com.devmmurray.marvel.data.model.entities.CharacterComicsEntity
+import com.devmmurray.marvel.data.model.entities.CharacterEntity
+import com.devmmurray.marvel.data.model.entities.CharacterSeriesEntity
+import com.devmmurray.marvel.data.repository.MarvelApiRepo
 import com.devmmurray.marvel.util.CharacterFlags
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
+private const val TAG = "CharactersViewModel"
 
 class CharactersViewModel(application: Application) : MainActivityViewModel(application) {
 
     // Functions to Retrieve Poster Characters
     fun getPosterCharacter(flags: CharacterFlags) {
         // List of all character lists
+        Log.d(TAG, "************ getPosterCharacter Called ****************")
         val listOfMaps = arrayListOf<Map<String, Int>>(
             popularCharacterArray,
             femaleCharacterArray,
@@ -47,36 +56,50 @@ class CharactersViewModel(application: Application) : MainActivityViewModel(appl
         val mapPosition = (0 until map.size - 1).random()
         val character = idArray[mapPosition]
 
-        getPosterCharacter(character, flags)
+        posterCharacter(character, flags)
     }
 
-    private fun getPosterCharacter(id: Int, flags: CharacterFlags) =
+    private fun posterCharacter(id: Int, flags: CharacterFlags) =
         viewModelScope.launch(Dispatchers.IO) {
-            when (flags) {
-                CharacterFlags.FIRST_POSTER ->
-                    _firstPosterLD.postValue(repository.getCharacterByMarvelId(id))
-                CharacterFlags.SECOND_POSTER ->
-                    _secondPosterLD.postValue(repository.getCharacterByMarvelId(id))
-                else ->
-                    _thirdPosterLD.postValue(repository.getCharacterByMarvelId(id))
+            Log.d(TAG, "************ posterCharacter Called: ID = $id ****************")
+            val checkId = repository.checkMarvelId(id)
+            if (checkId == null) {
+                getMarvelCharacter(id)
+            } else {
+                when (flags) {
+                    CharacterFlags.FIRST_POSTER ->
+                        _firstPosterLD.postValue(repository.getCharacterByMarvelId(id))
+                    CharacterFlags.SECOND_POSTER ->
+                        _secondPosterLD.postValue(repository.getCharacterByMarvelId(id))
+                    else ->
+                        _thirdPosterLD.postValue(repository.getCharacterByMarvelId(id))
+                }
             }
-
         }
 
 
     // Functions to retrieve character lists for recyclers
     fun loadList(list: Map<String, Int>, flag: CharacterFlags) {
+        Log.d(TAG, "************ loadList Called ****************")
         getList(list, flag)
     }
 
     private fun getList(list: Map<String, Int>, flag: CharacterFlags) {
         val tempList = ArrayList<CharacterObject>()
+        Log.d(TAG, "************ getList Called ****************")
         viewModelScope.launch {
             list.forEach { (_, id) ->
-                tempList.add(repository.getCharacterByMarvelId(id))
-
+                Log.d(TAG, "********** get list adding character id = $id ***********")
+                val checkId = repository.checkMarvelId(id)
+                if (checkId != null) {
+                    tempList.add(repository.getCharacterByMarvelId(id))
+                } else {
+                    getMarvelCharacter(id)
+                    Log.d(TAG, "*** .loadList character id = $id is null***********")
+                }
             }
         }
+
         when (flag) {
             CharacterFlags.POPULAR -> _popularListLD.value = tempList
             CharacterFlags.FEMALE -> _femaleListLD.value = tempList
@@ -87,6 +110,43 @@ class CharactersViewModel(application: Application) : MainActivityViewModel(appl
             CharacterFlags.CLASSICS -> _classicsListLD.value = tempList
             CharacterFlags.TV -> _tvListLD.value = tempList
             CharacterFlags.PUNISHER -> _punisherListLD.value = tempList
+        }
+    }
+
+    private fun getMarvelCharacter(id: Int) {
+        Log.d(TAG, "********* Get Marvel Character Called: ID = $id *****************")
+        viewModelScope.launch {
+            val result = MarvelApiRepo.getMarvelCharacter(id.toString())
+            result.body()?.data?.results?.forEach {
+                it.comics?.items?.forEach { item ->
+                    val comic =
+                        CharacterComicsEntity(
+                            characterId = it.marvelId,
+                            comicId = item.comicId?.toInt()
+                        )
+                    addCharacterComic(comic)
+                }
+
+                it.series?.items?.forEach { item ->
+                    val series =
+                        CharacterSeriesEntity(
+                            characterId = it.marvelId,
+                            seriesId = item.seriesId?.toInt()
+                        )
+                    addCharacterSeries(series)
+                }
+
+                val character = CharacterEntity(
+                    marvelId = it.marvelId,
+                    timeStamp = UrlAddress.CURRENT_TIME,
+                    name = it.name,
+                    description = it.description,
+                    thumbnail = it.thumbnail?.thumbnail,
+                    poster = it.thumbnail?.poster
+                )
+                Log.d(TAG, "* * * * *  adding character ${character.name} * * * * * ")
+                addCharacter(character)
+            }
         }
     }
 

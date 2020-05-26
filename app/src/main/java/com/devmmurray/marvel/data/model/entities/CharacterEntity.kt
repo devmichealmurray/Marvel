@@ -60,7 +60,7 @@ class CharacterComicsEntity(
     @ColumnInfo(name = "character_id")
     val characterId: Int?,
     @ColumnInfo(name = "comic_id")
-    val comicId: String?
+    val comicId: Int?
 ) {
     companion object {
 
@@ -87,7 +87,7 @@ class CharacterSeriesEntity(
     @ColumnInfo(name = "character_id")
     val characterId: Int?,
     @ColumnInfo(name = "series_id")
-    val seriesId: String?
+    val seriesId: Int?
 ) {
     companion object {
 

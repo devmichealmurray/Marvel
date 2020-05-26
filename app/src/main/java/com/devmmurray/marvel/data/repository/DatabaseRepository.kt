@@ -17,6 +17,9 @@ class DatabaseRepository(
     suspend fun addCharacter(character: CharacterEntity) =
         characterDataSource.addCharacter(character)
 
+    suspend fun checkMarvelId(id: Int) =
+        characterDataSource.getCharacterByMarvelId(id)
+
     suspend fun getCharacterByMarvelId(id: Int) =
         characterDataSource.getCharacterByMarvelId(id).toCharacterObject()
 
@@ -36,6 +39,9 @@ class DatabaseRepository(
 
     suspend fun checkCharacterDatabase() =
         characterDataSource.checkCharacterDatabase()
+
+    suspend fun countCharacterDB() =
+        characterDataSource.countCharacterDB()
 
     /**
      *  Comics Database Functions
@@ -60,7 +66,10 @@ class DatabaseRepository(
         comicsDataSource.getComicDate(comicId).map { it.toComicDate() }
 
     suspend fun checkComicsDatabase() =
-        comicsDataSource.checkComicsDatabase().toComicObject()
+        comicsDataSource.checkComicsDatabase()
+
+    suspend fun countComicsDatabase() =
+        comicsDataSource.countComicsDatabase()
 
 
     /**
@@ -87,5 +96,8 @@ class DatabaseRepository(
         seriesDataSource.getSeriesComics(seriesId).map { it.toSeriesComic() }
 
     suspend fun checkSeriesDatabase() =
-        seriesDataSource.checkSeriesDatabase().toSeriesObject()
+        seriesDataSource.checkSeriesDatabase()
+
+    suspend fun countSeriesDatabase() =
+        seriesDataSource.countSeriesDatabase()
 }

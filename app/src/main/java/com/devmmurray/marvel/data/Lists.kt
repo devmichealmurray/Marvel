@@ -3,8 +3,6 @@ package com.devmmurray.marvel.data
 class Lists {
 
     companion object {
-
-
         val popularCharacterArray = mapOf<String, Int>(
             "Hulk" to 1009351,
             "Spider-Man" to 1009610,

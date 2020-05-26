@@ -19,6 +19,8 @@ import com.devmmurray.marvel.util.CharacterFlags
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_characters.*
 
+private const val TAG = "CharactersFragment"
+
 class CharactersFragment : Fragment() {
 
     private val charactersViewModel: CharactersViewModel by viewModels()
@@ -49,7 +51,10 @@ class CharactersFragment : Fragment() {
         // Get and Load Main Character ImageView and TextViews
         charactersViewModel.getPosterCharacter(CharacterFlags.FIRST_POSTER)
         charactersViewModel.firstPosterLD.observe(viewLifecycleOwner, Observer {
-            it?.let { loadNewCharacter(it, firstPosterImage, firstPosterName, firstPosterDescription) }
+            it?.let {
+
+                loadNewCharacter(it, firstPosterImage, firstPosterName, firstPosterDescription)
+            }
         })
 
         charactersViewModel.getPosterCharacter(CharacterFlags.SECOND_POSTER)

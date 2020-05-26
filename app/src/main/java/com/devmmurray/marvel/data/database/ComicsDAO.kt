@@ -32,4 +32,7 @@ interface ComicsDAO {
     // Check if Database is empty
     @Query("SELECT * FROM comics LIMIT 1")
     suspend fun checkComicsDatabase(): ComicsEntity
+
+    @Query("SELECT COUNT(uid) FROM comics")
+    suspend fun countComicsDatabase(): Int?
 }

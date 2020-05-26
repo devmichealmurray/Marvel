@@ -32,4 +32,7 @@ interface SeriesDAO {
     // Database Check
     @Query("SELECT * FROM series LIMIT 1")
     suspend fun checkSeriesDatabase(): SeriesEntity
+
+    @Query("SELECT COUNT(uid) FROM series")
+    suspend fun countSeriesDatabase(): Int?
 }

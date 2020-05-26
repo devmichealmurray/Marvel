@@ -2,7 +2,6 @@ package com.devmmurray.marvel.ui.view.activities
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -13,6 +12,7 @@ import com.devmmurray.marvel.ui.view.fragments.HomeFragment
 import com.devmmurray.marvel.ui.view.fragments.SeriesFragment
 import com.devmmurray.marvel.ui.viewmodel.MainActivityViewModel
 
+private const val TAG = "Main Activity"
 
 open class MainActivity : AppCompatActivity() {
 
@@ -21,47 +21,40 @@ open class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//
-//        application.deleteDatabase("characters-db")
 
         val loading = supportFragmentManager.beginTransaction()
-        loading.add(R.id.nav_host_fragment,
+        loading.add(
+            R.id.nav_host_fragment,
             HomeFragment()
         )
         loading.commit()
 
-        // Checking DB to confirm Marvel data has been loaded
-        mainActivityViewModel.checkDatabase()
+        mainActivityViewModel.countCharacters()
 
-        // Observer to confirm db is loaded and ready to use
-        mainActivityViewModel.dataBaseIsLoaded.observe(this, dataBaseObserver)
-        // Observer updates user with loading progress Toast messages
-        mainActivityViewModel.dataLoadingToasts.observe(this, loadingToastsObserver)
+        // Checking DB to confirm Marvel data has been loaded
+//        mainActivityViewModel.loadCharacters()
+//        mainActivityViewModel.loadComics()
+//        mainActivityViewModel.loadSeries()
+
+        mainActivityViewModel.characterUpToDate.observe(this, characterObserver)
     }
 
 
-    private val dataBaseObserver = Observer<Boolean> {
+    private val characterObserver = Observer<Boolean> {
         if (it) {
             val appStart = supportFragmentManager.beginTransaction()
-            appStart.add(R.id.nav_host_fragment,
+            appStart.add(
+                R.id.nav_host_fragment,
                 CharactersFragment()
             )
             appStart.commit()
         }
     }
 
-    private val loadingToastsObserver = Observer<Int> {
-        val message = when (it) {
-            1 -> "Character Data Loaded"
-            2 -> "Comic Data Loaded"
-            else -> "Series Data Loaded"
-        }
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
     fun goToCharactersFragment(view: View) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.nav_host_fragment,
+        transaction.replace(
+            R.id.nav_host_fragment,
             CharactersFragment()
         )
         transaction.commit()
@@ -69,16 +62,18 @@ open class MainActivity : AppCompatActivity() {
 
     fun goToComicsFragment(view: View) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.nav_host_fragment,
-            ComicsFragment()
+        transaction.replace(
+            R.id.nav_host_fragment,
+            if (mainActivityViewModel.comicsUpToDate.value == true) ComicsFragment() else HomeFragment()
         )
         transaction.commit()
     }
 
     fun goToSeriesFragment(view: View) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.nav_host_fragment,
-            SeriesFragment()
+        transaction.replace(
+            R.id.nav_host_fragment,
+            if (mainActivityViewModel.seriesUpToDate.value == true) SeriesFragment() else HomeFragment()
         )
         transaction.commit()
     }

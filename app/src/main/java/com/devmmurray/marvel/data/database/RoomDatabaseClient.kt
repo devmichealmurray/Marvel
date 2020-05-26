@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.devmmurray.marvel.data.model.entities.*
 
-const val DATABASE_SCHEMA_VERSION = 1
+const val DATABASE_SCHEMA_VERSION = 3
 const val DB_NAME = "characters-db"
 
 @Database(

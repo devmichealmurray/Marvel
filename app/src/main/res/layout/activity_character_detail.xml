@@ -10,6 +10,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/characterImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
@@ -42,7 +43,6 @@
                     android:paddingStart="12dp"
                     android:paddingTop="78dp"
                     android:text="HULK"
-
                     android:textColor="@android:color/white"
                     android:textSize="24sp"
                     android:textStyle="bold"

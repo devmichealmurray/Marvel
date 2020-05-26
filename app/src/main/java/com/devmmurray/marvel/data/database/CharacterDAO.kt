@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.devmmurray.marvel.data.model.domain.CharacterObject
 import com.devmmurray.marvel.data.model.entities.CharacterComicsEntity
 import com.devmmurray.marvel.data.model.entities.CharacterEntity
 import com.devmmurray.marvel.data.model.entities.CharacterSeriesEntity
@@ -17,7 +16,6 @@ interface CharacterDAO {
 
     @Query("SELECT * FROM characters WHERE marvelId = :marvelId")
     suspend fun getCharacterByMarvelId(marvelId: Int): CharacterEntity
-
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addCharacterComic(comic: CharacterComicsEntity)
@@ -33,5 +31,10 @@ interface CharacterDAO {
 
     // Check if Database is empty
     @Query("SELECT * FROM characters LIMIT 1")
-    suspend fun checkCharacterDatabase(): CharacterObject
+    suspend fun checkCharacterDatabase(): CharacterEntity
+
+    @Query("SELECT COUNT(marvelId) FROM characters")
+    suspend fun countCharacterDB(): Int?
+
+    @Query("DELETE FROM characters")
 }

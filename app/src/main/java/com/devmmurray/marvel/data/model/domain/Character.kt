@@ -17,12 +17,12 @@ class CharactersComic(
     // id of character it belongs to
     val characterId: Int?,
     // the Marvel id of the comic
-    val comicId: String?
+    val comicId: Int?
 )
 
 class CharactersSeries(
     val id: Long = 0L,
     val characterId: Int?,
-    val seriesId: String?
+    val seriesId: Int?
 )
 
